@@ -1,15 +1,9 @@
-import localFont from "next/font/local";
+import { Sniglet } from "next/font/google";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const sniglet = Sniglet({
+  subsets: ["latin"],
+  weight: "800"
 });
 
 export const metadata = {
@@ -31,18 +25,18 @@ export const metadata = {
     description: 'Picky Mao - Food Finder',
   },
   icons: [
-    { rel: 'icon', url: '/logotiem.ico' },
-    { rel: 'apple-touch-icon', url: '/logotiem.ico' },
+    { rel: 'icon', url: '/capoo.ico' },
+    { rel: 'apple-touch-icon', url: '/capoo.ico' },
   ],
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={sniglet.className}>
+          <main>
+              {children}
+          </main>
       </body>
     </html>
   );

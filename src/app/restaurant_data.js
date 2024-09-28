@@ -1,20 +1,5 @@
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
-// to store the filter data -> three different objects for food, drink, dessert
-const drinkFilterWords = {
-  drinkTemp: //user choice --string
-  nowOrLater: //user choice --string
-};
-const dessertFilterWords = {
-  dessertType: //user choice --string
-  nowOrLater: //user choiec --string
-};
-const foodFilterWords = {
-  types: //user choice --string
-  cuisine: //user choice --string
-  price: //user choice --int(1, 2, 3, or 4)
-  nowOrLater: //user choice --string
-};
 
 function foodFinder(filterWords) {
   let narrowedChoices = [];
@@ -75,8 +60,6 @@ function dessertFinder(filterWords) {
   })
 };
 
-
-
 function getTime(foodList) {
   let hour = dayjs().hour();
   let hourString = hour.format('H');
@@ -109,6 +92,8 @@ function distanceFilter(filterWords, foodList) {
     })
   }
 };
+
+
 
 const gnvFood = [
   {
