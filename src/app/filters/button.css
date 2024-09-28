@@ -68,7 +68,7 @@
 .buttonContainer {
 	display: grid;
     grid-template-columns: repeat(2, 1fr); /* Creates two columns */
-    grid-template-rows: repeat(2, auto);   /* Creates two rows */
+    grid-template-rows: repeat(1, auto);   /* Creates two rows */
     gap: 1.5em;                             /* Spacing between buttons */
     padding: 10px;
     position: absolute;                     /* If you still want to keep it absolute */

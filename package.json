@@ -12,6 +12,8 @@
     "next": "^14.2.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.5",
     "tailwind": "^4.0.0"
   },
   "devDependencies": {

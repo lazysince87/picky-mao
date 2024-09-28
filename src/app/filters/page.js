@@ -1,232 +1,89 @@
-'use client'
-import React, {useState} from 'react'
-import './button.css'
-
+'use client';
+import React, { useState } from 'react';
+import './button.css';
+import ButtonPair from './ButtonPair'; // Import the ButtonPair component
 
 const Filter = () => {
+    const [buttonPairs, setButtonPairs] = useState([
+        [
+            { id: 'Opt1', label: 'Now', opacity: 1 },
+            { id: 'Opt2', label: 'Later', opacity: 1 },
+        ],
+        [
+            { id: 'Opt3', label: 'Gourmet', opacity: 1 },
+            { id: 'Opt4', label: 'Fast Food', opacity: 1 },
+            { id: 'Opt5', label: 'Buffet', opacity: 1 },
+            { id: 'Opt6', label: 'Any', opacity: 1},
+        ],
+        [
+            { id: 'Opt7', label: 'Asian', opacity: 1},
+            { id: 'Opt8', label: 'Hispanic', opacity: 1},
+            { id: 'Opt9', label: 'American', opacity: 1},
+            { id: 'Opt10', label: 'European', opacity: 1},
+            { id: 'Opt11', label: 'Any', opacity: 1},
+        ],
+    ]);
 
-    var [isOpen, setIsOpen] = useState(true);
-    var Opacity1 = false;
-    var Opacity2 = false;
-    var Now = 0;
-    var Later= 0;
-    var Vegan = 0;
-    var Non_Vegan = 0;
+    const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
 
-        
-// Toggle Visibilty---------------------------------------------------------------------------------------------------------
-    function toggle1() {
+    const handleNextButtons = (newButtons) => {
+        const updatedPairs = [...buttonPairs];
+        updatedPairs[currentPairIndex] = newButtons; // Update the current pair with new buttons
+        setButtonPairs(updatedPairs);
 
-        const button = document
-            .getElementById('Opt1');
-        const currentOpacity = window
-            .getComputedStyle(button).opacity;
-        
-        if (isOpen){
-            if (currentOpacity == 1 && Opacity2 != true) {
-                button.style.opacity = 0.5;
-                Opacity1 = true;
-                Vegan++;
-            } else if (Opacity1){
-                button.style.opacity = 1;
-                Opacity1 = false;
-                Vegan--;
-            }else if(Opacity2){
-                button.style.opacity = 0.5;
-                Opacity1 = true;
-                swtichOpacity1();
-                Vegan++;
-            } else {
-                button.style.opacity = 1;
-                Opacity1 = false;
-                Vegan--;
-            }
-        }
-
-        if(isOpen != true){
-            button.style.visibility = 'hidden';
-        }else{
-            button.style.visibility = 'visible'
-        }
-    }
-    function toggle2() {
-
-        const button = document
-            .getElementById('Opt2');
-        const currentOpacity = window
-            .getComputedStyle(button).opacity;
-        
-        if (isOpen){
-            if (currentOpacity == 1 && Opacity1 != true) {
-                button.style.opacity = 0.5;
-                Opacity2 = true;
-                Non_Vegan++;
-            } else if (Opacity2){
-                button.style.opacity = 1;
-                Opacity2 = false;
-                Non_Vegan--;
-            }else if(Opacity1){
-                button.style.opacity = 0.5;
-                Opacity2 = true;
-                swtichOpacity2();
-                Non_Vegan++;
-                
-            } else {
-                button.style.opacity = 1;
-                Opacity2 = false;
-                Non_Vegan--;
-            }
-        }
-
-        if(isOpen != true){
-            button.style.visibility = 'hidden';
-        }else{
-            button.style.visibility = 'visible'
-        }
-   
-    }
-
-    function swtichOpacity1(){
-        if (Opacity1){
-            toggle2();
-        }
-    }
-    function swtichOpacity2(){
-        if (Opacity2){
-            toggle1();
-        }
-    }
-
-//SECOND BUTTONS
-function toggle3() {
-
-    const button = document
-        .getElementById('Opt3');
-    const currentOpacity = window
-        .getComputedStyle(button).opacity;
-    
-    if (isOpen){
-        if (currentOpacity == 1 && Opacity2 != true) {
-            button.style.opacity = 0.5;
-            Opacity1 = true;
-            Now++;
-        } else if (Opacity1){
-            button.style.opacity = 1;
-            Opacity1 = false;
-            Now--;
-        }else if(Opacity2){
-            button.style.opacity = 0.5;
-            Opacity1 = true;
-            swtichOpacity1();
-            Now++;
+        // Move to the next pair if there is one
+        if (currentPairIndex < buttonPairs.length - 1) {
+            setCurrentPairIndex(currentPairIndex + 1);
         } else {
-            button.style.opacity = 1;
-            Opacity1 = false;
-            Now--;
+            // Optionally, you can add more pairs here if desired
+            addNewButtonPair();
         }
-    }
+    };
 
-    if(isOpen != true){
-        button.style.visibility = 'hidden';
-    }else{
-        button.style.visibility = 'visible'
-    }
-}
-function toggle4() {
+    const addNewButtonPair = () => {
+        const newPair = [
+            { id: `Opt${buttonPairs.length * 2 + 1}`, label: `New Pair ${buttonPairs.length + 1} - Button 1`, opacity: 1 },
+            { id: `Opt${buttonPairs.length * 2 + 2}`, label: `New Pair ${buttonPairs.length + 1} - Button 2`, opacity: 1 },
+        ];
+        setButtonPairs([...buttonPairs, newPair]); // Add the new button pair
+    };
 
-    const button = document
-        .getElementById('Opt4');
-    const currentOpacity = window
-        .getComputedStyle(button).opacity;
-    
-    if (isOpen){
-        if (currentOpacity == 1 && Opacity1 != true) {
-            button.style.opacity = 0.5;
-            Opacity2 = true;
-            Later++;
-        } else if (Opacity2){
-            button.style.opacity = 1;
-            Opacity2 = false;
-            Later--;
-        }else if(Opacity1){
-            button.style.opacity = 0.5;
-            Opacity2 = true;
-            swtichOpacity2();
-            Later++;
-            
-        } else {
-            button.style.opacity = 1;
-            Opacity2 = false;
-            Later--;
-        }
-    }
-
-    if(isOpen != true){
-        button.style.visibility = 'hidden';
-    }else{
-        button.style.visibility = 'visible'
-    }
-}
-
-//-------------------------------------------------------------------------------------------------------------
-
-
-
-    // Next set of filters
-    function falseVisibility() {
-        isOpen = false;
-    }
-    function trueVisibility() {
-        isOpen = true;
-    }
-    function secondSet(){
-        <button className = "Option1" id = "Opt3" onClick={toggle3}>
-            Vegan
-        </button>;
-        <button className = "Option1" id = "Opt4" onClick={toggle4}>
-            Non-Vegan
-        </button>; 
-    }
-    function nextOptions(){
-        falseVisibility();
-        toggle1();
-        toggle2();
-        isOpen = true;
-        secondSet();
-
-    }
-    function backOptions(){
-        trueVisibility();
-        toggle1();
-        toggle2();
-    }
-
-//OUTPUT---------------------------------------------------------------------------------------------------------
+    const backOptions = () => {
+        setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
+        setButtonPairs([
+            [
+                { id: 'Opt1', label: 'Now', opacity: 1 },
+                { id: 'Opt2', label: 'Later', opacity: 1 },
+            ],
+            [
+                { id: 'Opt3', label: 'Gourmet', opacity: 1 },
+                { id: 'Opt4', label: 'Fast Food', opacity: 1 },
+                { id: 'Opt5', label: 'Buffet', opacity: 1 },
+            ],
+            [
+                { id: 'Opt6', label: 'Asian', opacity: 1},
+                { id: 'Opt7', label: 'Hispanic', opacity: 1},
+                { id: 'Opt8', label: 'American', opacity: 1},
+                { id: 'Opt9', label: 'European', opacity: 1},
+                { id: 'Opt10', label: 'Any', opacity: 1},
+            ],
+        ]);
+    };
 
     return (
-    <> 
+        <div className='buttonContainer'>
+            {buttonPairs.length > 0 && (
+                <ButtonPair
+                    initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
+                    onNext={handleNextButtons} // Pass the handler for new buttons
+                    
+                />
+            )}
+            <button className="Back" onClick={backOptions}>
+                Back
+            </button>
+        </div>
+    );
+};
 
-            <div className='buttonContainer'>
-                <button className = "Option1" id = "Opt1" onClick = {toggle1}>
-                    Now
-                </button>        
-                
-                <button className = "Option1" id = "Opt2" onClick = {toggle2}>
-                    Later
-                </button> 
-                <button className = "Back" onClick = {backOptions}>
-                    Back
-                </button>
-                <button className = "Next" onClick = {nextOptions} >
-                    Next
-                </button>
-
-            </div> 
-
-
-    </>
-
-    )
-    
-        }
-export default Filter
+export default Filter;
