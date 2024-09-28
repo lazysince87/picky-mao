@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+.home {
+    position: relative;
+    z-index: 1;  
+    min-height: 100vh;
+    min-width: 100%;
+    display: flex;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  
+}
+
+.background {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
+
+.imagesContainer {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 20px; 
+}
+
+.foodChoiceDiv,
+.drinkChoiceDiv,
+.dessertChoiceDiv {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0px 3px 15px rgb(255, 255, 255);
+  text-align: center;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.foodChoice,
+.drinkChoice,
+.dessertChoice {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
