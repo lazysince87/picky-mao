@@ -22,6 +22,7 @@ app.put("/add", (req, res) => {
     age: req.body.age,
     country: req.body.country,
   });
+
   try {
     res.status(200).json(gnvDessert);
   } catch (error) {
@@ -92,3 +93,5 @@ const gnvDessert = [
     dessertType: "pastry"
   }
 ]
+
+export default gnvDessert;
