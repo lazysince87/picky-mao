@@ -1,10 +1,13 @@
+
 import React from 'react'
 import Image from "next/image";
+import PlaceSearch from './backend/google';
 
 export default function Home() {
   return (
     <div className= ' home '>
       <div className='background' style={{ backgroundColor: 'rgb(224,224,224)'}}>
+        <PlaceSearch />
         <div className='imagesContainer'>
             <div className="foodChoiceDiv">
               <Image 
