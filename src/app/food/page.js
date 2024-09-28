@@ -1,69 +1,101 @@
 'use client'
-import {useState, useEffect} from 'react'
+import React, { useState } from 'react';
+import Image from 'next/image'
+import ButtonPair from '../ButtonPair'; 
 import '../pages.css'
 
-/*
-export default function FoodPage() {
-*/
-    function App() {
-        const [type, setType] = useState("");
-      
-        const [data, setData] = useState([]);
-      
-        const handleSubmit = (event) => {
-          event.preventDefault();
-          fetch("http://localhost:3005/add", {
-            method: "PUT", // or 'PUT'
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({type}),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              setData(data);
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-        };
-      
-        useEffect(() => {
-          fetch("http://localhost:3005/")
-            .then((response) => response.json())
-            .then((item) => setData(item));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, data);
-      
-        return (
-          <div className="App">
-            <div className="input-area">
-              <h2>Add More Data</h2>
-              <div className="form-area">
-                <form onSubmit={handleSubmit}>
-                  <div className="input-1">
-                    <span>Add Name</span>
-                    <input
-                      value={type}
-                      placeholder="Enter Person Name..."
-                      onChange={(e) => setType(e.target.value)}
-                    />
-                  </div>
-                  </form>
-                    
-            </div>
-          </div>
-          </div>
-        );
-      }
+const Filter = () => {
+    const [buttonPairs, setButtonPairs] = useState([
+        [
+            { id: 'Opt1', label: 'Now', opacity: 1 },
+            { id: 'Opt2', label: 'Later', opacity: 1 },
+        ],
+        [
+            { id: 'Opt3', label: 'Gourmet', opacity: 1 },
+            { id: 'Opt4', label: 'Fast Food', opacity: 1 },
+            { id: 'Opt5', label: 'Buffet', opacity: 1 },
+            { id: 'Opt6', label: 'Any', opacity: 1},
+        ],
+        [
+            { id: 'Opt7', label: 'Asian', opacity: 1},
+            { id: 'Opt8', label: 'Hispanic', opacity: 1},
+            { id: 'Opt9', label: 'American', opacity: 1},
+            { id: 'Opt10', label: 'European', opacity: 1},
+            { id: 'Opt11', label: 'Any', opacity: 1},
+        ],
+    ]);
 
-      export default App;
-      
-/*
+    const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
+
+    const handleNextButtons = (newButtons) => {
+        const updatedPairs = [...buttonPairs];
+        updatedPairs[currentPairIndex] = newButtons; // Update the current pair with new buttons
+        setButtonPairs(updatedPairs);
+
+        // Move to the next pair if there is one
+        if (currentPairIndex < buttonPairs.length - 1) {
+            setCurrentPairIndex(currentPairIndex + 1);
+        } else {
+            // Optionally, you can add more pairs here if desired
+            addNewButtonPair();
+        }
+    };
+
+    const addNewButtonPair = () => {
+        const newPair = [
+            { id: `Opt${buttonPairs.length * 2 + 1}`, label: `New Pair ${buttonPairs.length + 1} - Button 1`, opacity: 1 },
+            { id: `Opt${buttonPairs.length * 2 + 2}`, label: `New Pair ${buttonPairs.length + 1} - Button 2`, opacity: 1 },
+        ];
+        setButtonPairs([...buttonPairs, newPair]); // Add the new button pair
+    };
+
+    const backOptions = () => {
+        setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
+        setButtonPairs([
+            [
+                { id: 'Opt1', label: 'Now', opacity: 1 },
+                { id: 'Opt2', label: 'Later', opacity: 1 },
+            ],
+            [
+                { id: 'Opt3', label: 'Gourmet', opacity: 1 },
+                { id: 'Opt4', label: 'Fast Food', opacity: 1 },
+                { id: 'Opt5', label: 'Buffet', opacity: 1 },
+            ],
+            [
+                { id: 'Opt6', label: 'Asian', opacity: 1},
+                { id: 'Opt7', label: 'Hispanic', opacity: 1},
+                { id: 'Opt8', label: 'American', opacity: 1},
+                { id: 'Opt9', label: 'European', opacity: 1},
+                { id: 'Opt10', label: 'Any', opacity: 1},
+            ],
+        ]);
+    };
+
     return (
-      <div>
-        <button className='submit' onClick={handleSubmit}></button>
-      </div>
+        <div className='body'>
+            <div className='CatCooks'>
+                <Image
+                src='/capoeats.gif'
+                alt='Picky Mao Eats'
+                width={400}
+                height={400}
+                style={{ objectFit: 'contain', width: 'auto' }}
+                />
+                <div className='buttonContainer'>
+                    {buttonPairs.length > 0 && (
+                        <ButtonPair
+                            initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
+                            onNext={handleNextButtons} // Pass the handler for new buttons
+                            
+                        />
+                    )}
+                    <button className="Back" onClick={backOptions}>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </div>
     );
-  }
-    */
+};
+
+export default Filter;
