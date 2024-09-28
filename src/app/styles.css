@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Coiny');
 
 * {
   margin: 0;
@@ -11,56 +11,85 @@ a {
 }
 
 .home {
-    position: relative;
-    z-index: 1;  
-    min-height: 100vh;
-    min-width: 100%;
-    display: flex;
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
+  width: 100%;
+  position: relative;
+  z-index: 1;  
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-  
+  margin: 0;
+  padding:0;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  background: rgb(224,224,224);
+  z-index: -2;
 }
 
-.background {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    z-index: -1;
-  }
+.title {
+  font-size: 80px;
+  color:rgb(211, 154, 217);
+  font-weight: 800;
+}
 
 .imagesContainer {
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 20px; 
-}
-
-.foodChoiceDiv,
-.drinkChoiceDiv,
-.dessertChoiceDiv {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0px 3px 15px rgb(255, 255, 255);
-  text-align: center;
-  justify-content: center; 
+  display: flex; 
   align-items: center; 
+  height: 400px;
+  margin: 0 auto;
+  max-width: 1000px;
+  position: relative;
+  perspective: 1000px;
+  display: flex;
+  flex-direction: row;
 }
 
-.foodChoice,
-.drinkChoice,
-.dessertChoice {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.Choice {
+    width: 400px;
+    transition: all 0.3s ease-in-out;
+    z-index: 0;
+    border-radius: 20%;
+    background-size: contain;
+    opacity: 0.5;
 }
+
+.Choice.active {
+  opacity: 1; /* Fully visible for the active image */
+  transform: scale(1.1); /* Slightly larger for the active image */
+  box-shadow: -2px 5px 33px 6px rgba(0, 0, 0, 0.35); /* Highlight */
+}
+
+.Choice.left, .Choice.right {
+  transform: scale(0.8); /* Smaller for side images */
+  opacity: 0.5; /* Faded for side images */
+}
+
+.slideButton {
+  padding: 15px 30px; 
+  margin: 0 10px; /* Space between buttons */
+  border: none; 
+  border-radius: 10px; 
+  background-color: rgb(223, 164, 229); 
+  color: white; 
+  font-size: 16px;
+  cursor: pointer; 
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+
+.slideButton:hover {
+  background-color:rgb(211, 154, 217);  
+  transform: scale(1.05); 
+}
+
+.navigate {
+  display: flex;
+  justify-content: center; 
+  margin-top: 40px; 
+  width: 100%;
+}
+
