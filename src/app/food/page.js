@@ -1,6 +1,5 @@
 'use client'
-import {useState, useEffect} from 'react'
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './button.css';
 import ButtonPair from './ButtonPair'; // Import the ButtonPair component
 
@@ -26,6 +25,7 @@ const Filter = () => {
     ]);
 
     const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
+    const [lastSelections, setLastSelections] = useState({});
 
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
@@ -35,19 +35,17 @@ const Filter = () => {
         // Move to the next pair if there is one
         if (currentPairIndex < buttonPairs.length - 1) {
             setCurrentPairIndex(currentPairIndex + 1);
-        } else {
-            // Optionally, you can add more pairs here if desired
-            addNewButtonPair();
         }
     };
 
-    const addNewButtonPair = () => {
-        const newPair = [
-            { id: `Opt${buttonPairs.length * 2 + 1}`, label: `New Pair ${buttonPairs.length + 1} - Button 1`, opacity: 1 },
-            { id: `Opt${buttonPairs.length * 2 + 2}`, label: `New Pair ${buttonPairs.length + 1} - Button 2`, opacity: 1 },
-        ];
-        setButtonPairs([...buttonPairs, newPair]); // Add the new button pair
-    };
+
+
+    const handleButtonClick = (id) => {
+      setLastSelections((prevSelections) => ({
+          ...prevSelections,
+          [currentPairIndex]: id, // Track the last selected button for the current pair
+      }));
+    }
 
     const backOptions = () => {
         setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
@@ -71,6 +69,15 @@ const Filter = () => {
         ]);
     };
 
+    const handleClick = (id) => {
+      onButtonClick(id); // Call the parent click handler
+      const updatedButtons = initialButtons.map(button => {
+          return button.id === id ? { ...button, opacity: 0.5 } : button; // Change opacity on click
+      });
+      onNext(updatedButtons); // Call the function to pass updated buttons back to Filter
+  };
+  
+
     return (
         <div className='buttonContainer'>
             {buttonPairs.length > 0 && (
@@ -82,6 +89,9 @@ const Filter = () => {
             )}
             <button className="Back" onClick={backOptions}>
                 Back
+            </button>
+            <button className="Final" onClick={() => console.log(lastSelections)}>
+                Submit
             </button>
         </div>
     );

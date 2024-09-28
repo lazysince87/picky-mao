@@ -1,30 +1,31 @@
-'use client';
-import React, { useState } from 'react';
+'use client'
+import React, { useState,useEffect } from 'react';
 import './button.css';
-import ButtonPair from './ButtonPair'; // Import the ButtonPair component
+import ButtonPair from './ButtonPair';
+
 
 const Filter = () => {
     const [buttonPairs, setButtonPairs] = useState([
         [
-            { id: 'Opt1', label: 'Now', opacity: 1 },
-            { id: 'Opt2', label: 'Later', opacity: 1 },
+            { id: 'Now', label: 'Now', opacity: 1 },
+            { id: 'Later', label: 'Later', opacity: 1 },
         ],
         [
-            { id: 'Opt3', label: 'Gourmet', opacity: 1 },
-            { id: 'Opt4', label: 'Fast Food', opacity: 1 },
-            { id: 'Opt5', label: 'Buffet', opacity: 1 },
-            { id: 'Opt6', label: 'Any', opacity: 1},
+            { id: 'gourmet', label: 'Gourmet', opacity: 1 },
+            { id: 'fast food', label: 'Fast Food', opacity: 1 },
+            { id: 'buffet', label: 'Buffet', opacity: 1 },
         ],
         [
-            { id: 'Opt7', label: 'Asian', opacity: 1},
-            { id: 'Opt8', label: 'Hispanic', opacity: 1},
-            { id: 'Opt9', label: 'American', opacity: 1},
-            { id: 'Opt10', label: 'European', opacity: 1},
-            { id: 'Opt11', label: 'Any', opacity: 1},
+            { id: 'asian', label: 'Asian', opacity: 1},
+            { id: 'hispanic', label: 'Hispanic', opacity: 1},
+            { id: 'american', label: 'American', opacity: 1},
+            { id: 'european', label: 'European', opacity: 1},
+            { id: 'Any', label: 'Any', opacity: 1},
         ],
     ]);
 
     const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
+    const [lastSelections, setLastSelections] = useState({});
 
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
@@ -34,53 +35,83 @@ const Filter = () => {
         // Move to the next pair if there is one
         if (currentPairIndex < buttonPairs.length - 1) {
             setCurrentPairIndex(currentPairIndex + 1);
-        } else {
-            // Optionally, you can add more pairs here if desired
-            addNewButtonPair();
         }
     };
 
-    const addNewButtonPair = () => {
-        const newPair = [
-            { id: `Opt${buttonPairs.length * 2 + 1}`, label: `New Pair ${buttonPairs.length + 1} - Button 1`, opacity: 1 },
-            { id: `Opt${buttonPairs.length * 2 + 2}`, label: `New Pair ${buttonPairs.length + 1} - Button 2`, opacity: 1 },
-        ];
-        setButtonPairs([...buttonPairs, newPair]); // Add the new button pair
+
+
+    const handleButtonClick = (id) => {
+        setLastSelections((prevSelections) => ({
+            ...prevSelections,
+            [currentPairIndex]: id,
+        }));
     };
 
     const backOptions = () => {
         setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
         setButtonPairs([
             [
-                { id: 'Opt1', label: 'Now', opacity: 1 },
-                { id: 'Opt2', label: 'Later', opacity: 1 },
+                { id: 'Now', label: 'Now', opacity: 1 },
+                { id: 'Later', label: 'Later', opacity: 1 },
             ],
             [
-                { id: 'Opt3', label: 'Gourmet', opacity: 1 },
-                { id: 'Opt4', label: 'Fast Food', opacity: 1 },
-                { id: 'Opt5', label: 'Buffet', opacity: 1 },
+                { id: 'gourmet', label: 'Gourmet', opacity: 1 },
+                { id: 'fast food', label: 'Fast Food', opacity: 1 },
+                { id: 'buffet', label: 'Buffet', opacity: 1 },
             ],
             [
-                { id: 'Opt6', label: 'Asian', opacity: 1},
-                { id: 'Opt7', label: 'Hispanic', opacity: 1},
-                { id: 'Opt8', label: 'American', opacity: 1},
-                { id: 'Opt9', label: 'European', opacity: 1},
-                { id: 'Opt10', label: 'Any', opacity: 1},
+                { id: 'asian', label: 'Asian', opacity: 1},
+                { id: 'hispanic', label: 'Hispanic', opacity: 1},
+                { id: 'american', label: 'American', opacity: 1},
+                { id: 'european', label: 'European', opacity: 1},
+                { id: 'Any', label: 'Any', opacity: 1},
             ],
         ]);
     };
 
+    const handleClick = (id) => {
+        onButtonClick(id); // Call the parent click handler
+        const updatedButtons = initialButtons.map(button => {
+            //return button.id === id ? { ...button, opacity: 0.5 } : button; // Change opacity on click
+        });
+        onNext(updatedButtons); // Call the function to pass updated buttons back to Filter
+    };
+    
+    const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
+        return (
+            <div>
+                {initialButtons.map(button => (
+                    <button
+                        key={button.id}
+                        onClick={() => {
+                            onButtonClick(button.id); // Call the handler with the button ID
+                            const updatedButtons = initialButtons.map(b => {
+                                return b.id === button.id ? { ...b, opacity: 1 } : b;
+                            });
+                            onNext(updatedButtons); // Pass updated buttons back to Filter
+                        }}
+                         style={{ opacity: button.opacity }}
+                    >
+                        {button.label}
+                    </button>
+                ))}
+            </div>
+        );
+    };
     return (
         <div className='buttonContainer'>
             {buttonPairs.length > 0 && (
                 <ButtonPair
                     initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
                     onNext={handleNextButtons} // Pass the handler for new buttons
-                    
+                    onButtonClick={handleButtonClick} // Pass button click handler
                 />
             )}
             <button className="Back" onClick={backOptions}>
                 Back
+            </button>
+            <button className="Final" onClick={() => console.log(lastSelections)}>
+                Submit
             </button>
         </div>
     );
