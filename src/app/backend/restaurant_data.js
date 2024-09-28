@@ -1,6 +1,5 @@
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
-
 function foodFinder(filterWords) {
   let narrowedChoices = [];
 
@@ -9,9 +8,8 @@ function foodFinder(filterWords) {
   let finalChoices = [];
 
   narrowedChoices.forEach((restuarant) => {
-    if((filterWords.types === restuarant.types) &&
-       (filterWords.cuisine === restuarant.cuisine) && 
-       (restuarant.price <= filterWords.price)) {
+    if(((filterWords.types === restuarant.types) || (filterWords.types === "Any")) &&
+       ((filterWords.cuisine === restuarant.cuisine) || (filterWords.cuisine === "Any"))) {
         if((filterWords.nowOrLater === "now") && getTime(gnvFood)) {
           finalChoices.push(restuarant);
         }
@@ -30,7 +28,7 @@ function drinkFinder(filterWords) {
   let finalChoices = [];
 
   narrowedChoices.forEach((restuarant) => {
-    if((filterWords.drinkTemp === restuarant.drinkTemp)) {
+    if((filterWords.drinkTemp === restuarant.drinkTemp) || (filterWords.drinkTemp === "Any")) {
       if((filterWords.nowOrLater === "now") && getTime(gnvDrink)) {
         finalChoices.push(restuarant);
       }
@@ -49,7 +47,7 @@ function dessertFinder(filterWords) {
   let finalChoices = [];
 
   narrowedChoices.forEach((restuarant) => {
-    if((filterWords.dessertType === restuarant.dessertType)) {
+    if((filterWords.dessertType === restuarant.dessertType) || (filterWords.dessertType === "Any")) {
       if((filterWords.nowOrLater === "now") && getTime(gnvDessert)) {
         finalChoices.push(restuarant);
       }
@@ -103,7 +101,6 @@ const gnvFood = [
       closeTime: 21.0,
       types: "gourmet",
       cuisine: "american",
-      price: 1
   }, {
       name: "Pokebowl Station",
       distance: 0.4,
@@ -111,7 +108,6 @@ const gnvFood = [
       closeTime: 21.0,
       types: "fast food",
       cuisine: "asian",
-      price: 1
   }, {
       name: "McDonald's",
       distance: 0.7,
@@ -119,7 +115,6 @@ const gnvFood = [
       closeTime: 24.0,
       types: "fast food",
       cuisine: "american",
-      price: 1
   }, {
       name: "Tup Tim Thai",
       distance: 0.7,
@@ -127,7 +122,6 @@ const gnvFood = [
       closeTime: 21.0,
       types: "gourmet",
       cuisine: "asian",
-      price: 1
   }, {
       name: "Raising Cane's",
       distance: 0.4,
@@ -135,7 +129,6 @@ const gnvFood = [
       closeTime: 26.0,
       types: "fast food",
       cuisine: "american",
-      price: 1
   }, {
       name: "Momoyaki",
       distance: 1.1,
@@ -143,7 +136,6 @@ const gnvFood = [
       closeTime: 21.0,
       types: "gourmet",
       cuisine: "asian",
-      price: 1
   }, {
       name: "El Indio",
       distance: 0.9,
@@ -151,7 +143,6 @@ const gnvFood = [
       closeTime: 21.0,
       types: "gourmet",
       cuisine: "hispanic",
-      price: 1
   }, {
       name: "Subway",
       distance: 0.9,
@@ -159,7 +150,6 @@ const gnvFood = [
       closeTime: 24.0,
       types: "fast food",
       cuisine: "american",
-      price: 1
   }, {
       name: "M&D West African Cuisine",
       distance: 0.9,
@@ -167,7 +157,6 @@ const gnvFood = [
       closeTime: 24.0,
       types: "fast food",
       cuisine: "american",
-      price: 1
   }
 ]
 
