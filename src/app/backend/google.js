@@ -17,7 +17,7 @@ const PlaceSearch = () => {
     try {
       // const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY; // Securely get the API key
       const response = await fetch(
-        "https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(searchQuery)}&key=${apiKey}"
+        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(searchQuery)}&key=${apiKey}`
       );
 
       const data = await response.json();
