@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 'use client'
 import {useState, useEffect} from 'react'
 import React, { useState } from 'react';
@@ -90,4 +88,3 @@ const Filter = () => {
 };
 
 export default Filter;
->>>>>>> main
