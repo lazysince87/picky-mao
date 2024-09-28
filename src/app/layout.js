@@ -1,9 +1,9 @@
-import { Coiny } from "next/font/google";
+import { Sniglet } from "next/font/google";
 import "./globals.css";
 
-const coiny = Coiny({
+const sniglet = Sniglet({
   subsets: ["latin"],
-  weight: "400"
+  weight: "800"
 });
 
 export const metadata = {
@@ -25,15 +25,15 @@ export const metadata = {
     description: 'Picky Mao - Food Finder',
   },
   icons: [
-    { rel: 'icon', url: '/logotiem.ico' },
-    { rel: 'apple-touch-icon', url: '/logotiem.ico' },
+    { rel: 'icon', url: '/capoo.ico' },
+    { rel: 'apple-touch-icon', url: '/capoo.ico' },
   ],
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={coiny.className}>
+      <body className={sniglet.className}>
           <main>
               {children}
           </main>

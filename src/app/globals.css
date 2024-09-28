@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro');
+@import url('https://fonts.googleapis.com/css2?family=Sniglet');
 
 :root {
   --background: #ffffff;
@@ -18,7 +18,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Coiny', sans-serif;
+  font-family: 'Sniglet', sans-serif;
 }
 
 @layer utilities {
