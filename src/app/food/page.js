@@ -1,5 +1,6 @@
 'use client'
 import {useState, useEffect} from 'react'
+import '../pages.css'
 
 /*
 export default function FoodPage() {
@@ -11,12 +12,12 @@ export default function FoodPage() {
       
         const handleSubmit = (event) => {
           event.preventDefault();
-          fetch("http://localhost:3000/add", {
+          fetch("http://localhost:3005/add", {
             method: "PUT", // or 'PUT'
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({name,age,country}),
+            body: JSON.stringify({type}),
           })
             .then((response) => response.json())
             .then((data) => {
@@ -28,7 +29,7 @@ export default function FoodPage() {
         };
       
         useEffect(() => {
-          fetch("http://localhost:3000/")
+          fetch("http://localhost:3005/")
             .then((response) => response.json())
             .then((item) => setData(item));
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +43,7 @@ export default function FoodPage() {
                 <form onSubmit={handleSubmit}>
                   <div className="input-1">
                     <span>Add Name</span>
-                    <button
+                    <input
                       value={type}
                       placeholder="Enter Person Name..."
                       onChange={(e) => setType(e.target.value)}
