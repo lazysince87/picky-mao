@@ -65,12 +65,17 @@ const Filter = () => {
         }
     };
 
+    let hi = ''
+
     const handleSubmit = () => {
         const decision = drinkRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision);
         setIsModalOpen(true)
+
+        hi = decision.name
     };
+    const initialQuery = hi
 
     const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
         return (
@@ -134,7 +139,8 @@ const Filter = () => {
               <button className="exitButton" onClick={() => setIsModalOpen(false)}>
                         ✖     
                 </button>
-                <App className='api'></App>
+                <App initialQuery={initialQuery} 
+                className='api'></App>
                 <h2>CAT COOKED!</h2>
                 <h2>Recommended Restaurant:
                 <p>{JSON.stringify(result)}</p>
