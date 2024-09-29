@@ -2,16 +2,13 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 export default function foodRestaurantDecision(filterWords) {
   function foodFinder(filterWords) {
-    let narrowedChoices = [];
   
     distanceFilter(filterWords, gnvFood);
-  
-    let finalChoices = [];
-  
+    
     narrowedChoices.forEach((restuarant) => {
       if(((filterWords.types === restuarant.types) || (filterWords.types === "Any")) &&
          ((filterWords.cuisine === restuarant.cuisine) || (filterWords.cuisine === "Any"))) {
-          if((filterWords.nowOrLater === "now") && getTime(gnvFood)) {
+          if((filterWords.nowOrLater === "now") && getTime(restaurant)) {
             finalChoices.push(restuarant);
           }
           else {
@@ -27,34 +24,38 @@ export default function foodRestaurantDecision(filterWords) {
     }
   };
 
-  function getTime(foodList) {
+  function getTime(restaurant) {
     let hour = dayjs().hour();
     let hourString = hour.format('H');
     let hourFloat = parseFloat(hourString);
     
-    if(hourFloat > foodList.openTime && hourFloat < foodList.closeTime) {
+    if(hourFloat > restaurant.openTime && hourFloat < restaurant.closeTime) {
       return true;
     }
     return false
   };
   
+  let narrowedChoices = [];
+
+  let finalChoices = [];
+
   function distanceFilter(filterWords, foodList) {
     if(filterWords.distance === 1) {
       foodList.forEach((restuarant) => {
         if(restuarant.distance <= 1.0) {
-          finalChoices.push(restuarant);
+          narrowedChoices.push(restuarant);
         }
       })
     } else if(filterWords.distance === 2) {
       foodList.forEach((restuarant) => {
         if(restuarant.distance <= 3.0) {
-          finalChoices.push(restuarant);
+          narrowedChoices.push(restuarant);
         }
       })
     } else {
       foodList.forEach((restuarant) => {
         if(restuarant.distance > 3.0) {
-          finalChoices.push(restuarant);
+          narrowedChoices.push(restuarant);
         }
       })
     }
