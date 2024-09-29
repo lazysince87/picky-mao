@@ -33,14 +33,19 @@ const Filter = () => {
     const [currentPairIndex, setCurrentPairIndex] = useState(0);
     const [lastSelections, setLastSelections] = useState({});
     const [result, setResult] = useState(null);
+    const [hideLastSet, setHideLastSet] = useState(false); // New state for hiding last set
 
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
         updatedPairs[currentPairIndex] = newButtons; 
         setButtonPairs(updatedPairs);
 
+        // Move to the next pair if there is one
         if (currentPairIndex < buttonPairs.length - 1) {
             setCurrentPairIndex(currentPairIndex + 1);
+        } else {
+            // If we are at the last pair, set hideLastSet to true
+            setHideLastSet(true);
         }
     };
 
@@ -52,42 +57,70 @@ const Filter = () => {
     };
 
     const backOptions = () => {
-        setCurrentPairIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+        if (currentPairIndex > 0) {
+            setCurrentPairIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+            setHideLastSet(false); // Show buttons again when going back
+        }
     };
 
     const handleSubmit = () => {
         const decision = foodRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
-        setResult(decision); // Store the result
+        setResult(decision);
+    };
+
+    const ButtonPairComponent = ({ initialButtons, onNext, onButtonClick }) => {
+        return (
+            <div>
+                {initialButtons.map(button => (
+                    <button
+                        className='button'
+                        key={button.id}
+                        onClick={() => {
+                            onButtonClick(button.id);
+                            const updatedButtons = initialButtons.map(b => ({
+                                ...b,
+                                opacity: b.id === button.id ? 1 : b.opacity,
+                            }));
+                            onNext(updatedButtons);
+                        }}
+                        style={{ opacity: button.opacity }}
+                    >
+                        {button.label}
+                    </button>
+                ))}
+            </div>
+        );
     };
 
     return (
         <div className='body'>
-            <div className='CatCooks'>
+            <div className='buttonBox'>
                 <Image
-                    src='/capoeats.gif'
-                    alt='Picky Mao Eats'
+                    className='catimg'
+                    src='/capochills.gif'
+                    alt='Picky Mao Cooks'
                     width={400}
                     height={400}
                     style={{ objectFit: 'contain', width: 'auto' }}
                 />
                 <div className='buttonContainer'>
-                    {buttonPairs.length > 0 && (
-                        <ButtonPair
-                            initialButtons={buttonPairs[currentPairIndex]}
-                            onNext={handleNextButtons}
-                            onButtonClick={handleButtonClick}
+                    {!hideLastSet && buttonPairs.length > 0 && (
+                        <ButtonPairComponent
+                            initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
+                            onNext={handleNextButtons} // Pass the handler for new buttons
+                            onButtonClick={handleButtonClick} // Pass button click handler
                         />
                     )}
+                    <div className='submitBtn'>
+                        <button className="Back" onClick={backOptions}>
+                            Back
+                        </button>
+                        <button className="Final" onClick={handleSubmit}>
+                            Submit
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div className='buttonContainer'>
-                <button className="Back" onClick={backOptions}>
-                    Back
-                </button>
-                <button className="Final" onClick={handleSubmit}>
-                    Submit
-                </button>
             </div>
             {result && (
                 <div className="resultContainer">
