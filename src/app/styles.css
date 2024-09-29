@@ -28,7 +28,7 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: 'Sniglet', sans-serif;
-  background: rgb(224,224,224);
+  background: rgb(252,220,220);
   z-index: -2;
 }
 
@@ -41,7 +41,7 @@ body {
 .title {
   font-size: 100px;
   font-family: 'Sniglet', sans-serif;
-  color:rgb(211, 154, 217);
+  color:#fc6c6c;
   font-weight: 800;
   margin-bottom: 100px;
   text-shadow: 
@@ -93,18 +93,21 @@ body {
   margin: 0 10px; /* Space between buttons */
   border: none; 
   border-radius: 10px; 
-  background-color: rgb(255, 151, 151); 
+  background-color: #fc6c6c;
   color: white; 
   font-size: 28px;
   cursor: pointer; 
   font-family: 'Sniglet', sans-serif;
   font-weight: 800;
-  transition: background-color 0.3s ease, transform 0.3s ease; 
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  outline: 5px solid white;
+  
 }
 
 .slideButton:hover {
-  background-color:rgb(254, 203, 203);  
+  background-color:rgb(255, 198, 198);  
   transform: scale(1.05); 
+
 }
 
 .navigate {
