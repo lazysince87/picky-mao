@@ -1,5 +1,6 @@
 'use client'
 import React, { useState,useEffect } from 'react';
+import './button.css';
 import ButtonPair from './ButtonPair';
 
 
@@ -23,6 +24,13 @@ const Filter = () => {
 
     const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
     const [lastSelections, setLastSelections] = useState({});
+    const [result, setResult] = useState(null); // To store the result
+
+    useEffect(() => {
+        // Calculate result whenever lastSelections changes
+        const calculatedResult = dessertRestaurantDecision(lastSelections);
+        setResult(calculatedResult);
+    }, [lastSelections]);
 
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
@@ -43,10 +51,9 @@ const Filter = () => {
             [currentPairIndex]: id,
         }));
     };
-
     const backOptions = () => {
         setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Previous Pair
-    }
+
 
     const handleClick = (id) => {
         onButtonClick(id); // Call the parent click handler
@@ -91,8 +98,9 @@ const Filter = () => {
             <button className="Final" onClick={() => console.log(lastSelections)}>
                 Submit
             </button>
+            <h1>{result}</h1>
         </div>
-        );
-    };
+    );
+};
 
 export default Filter;
