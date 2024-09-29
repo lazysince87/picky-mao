@@ -1,7 +1,9 @@
 'use client'
-import React, { useState,useEffect } from 'react';
-import './button.css';
-import ButtonPair from './ButtonPair';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image'
+import ButtonPair from '../ButtonPair'; 
+import '../pages.css'
+import foodRestaurantDecision from '../backend/foodFunction';
 
 
 const Filter = () => {
@@ -32,6 +34,7 @@ const Filter = () => {
 
     const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
     const [lastSelections, setLastSelections] = useState({});
+    const [result, setResult] = useState(null); // State to store the result
 
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
@@ -44,8 +47,6 @@ const Filter = () => {
         }
     };
 
-
-
     const handleButtonClick = (id) => {
         setLastSelections((prevSelections) => ({
             ...prevSelections,
@@ -56,6 +57,13 @@ const Filter = () => {
     const backOptions = () => {
         setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
 
+    };
+
+    const handleSubmit = ()=> {
+        // const decision = foodRestaurantDecision(lastSelections);
+        const decision = {name: "hi", distance: 3.2, openTime: 10.0, closeTime: 19.0, cuisine: "asian"};
+        console.log("Decision:", decision);
+        setResult(decision); // Store the result
     };
 
     const handleClick = (id) => {
@@ -87,20 +95,47 @@ const Filter = () => {
         );
     };
     return (
-        <div className='buttonContainer'>
+        <div className='body'>
+            <div className='CatCooks'>
+                <Image
+                src='/capoeats.gif'
+                alt='Picky Mao Eats'
+                width={400}
+                height={400}
+                style={{ objectFit: 'contain', width: 'auto' }}
+            />
+            <div className='buttonContainer'>
             {buttonPairs.length > 0 && (
-                <ButtonPair
-                    initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
-                    onNext={handleNextButtons} // Pass the handler for new buttons
-                    onButtonClick={handleButtonClick} // Pass button click handler
-                />
+                <><ButtonPair
+                                initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
+                                onNext={handleNextButtons} // Pass the handler for new buttons
+                                onButtonClick={handleButtonClick} // Pass button click handler
+                            /><div className='buttonContainer'>
+                                    {buttonPairs.length > 0 && (
+                                        <ButtonPair
+                                            initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
+                                            onNext={handleNextButtons} // Pass the handler for new buttons
+                                        />
+                                    )}
+                                    <button className="Back" onClick={backOptions}>
+                                        Back
+                                    </button>
+                                </div></>
             )}
+            </div>
+        </div>
             <button className="Back" onClick={backOptions}>
                 Back
             </button>
-            <button className="Final" onClick={() => console.log(lastSelections)}>
+            <button className="Final" onClick={handleSubmit}>
                 Submit
             </button>
+            {result && (
+                <div className="resultContainer">
+                    <h2>Recommended Restaurant:</h2>
+                    <p>{JSON.stringify(result)}</p> {/* Display the result here */}
+                </div>
+            )}
         </div>
     );
 };

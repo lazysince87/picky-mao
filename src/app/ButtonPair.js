@@ -10,7 +10,7 @@ const ButtonPair = ({ initialButtons, onNext }) => {
     };
 
     return (
-        <div>
+        <div className='buttonPair'>
             {initialButtons.map(button => (
                 <button
                     key={button.id}

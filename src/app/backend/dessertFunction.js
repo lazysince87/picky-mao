@@ -1,4 +1,4 @@
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import dayjs from 'dayjs';
 
 export default function dessertRestaurantDecision(filterWords) {
   function dessertFinder(filterWords) {
@@ -30,6 +30,7 @@ export default function dessertRestaurantDecision(filterWords) {
     let hour = dayjs().hour();
     let hourString = hour.format('H');
     let hourFloat = parseFloat(hourString);
+    console.log(hourString)
     
     if(hourFloat > foodList.openTime && hourFloat < foodList.closeTime) {
       return true;
