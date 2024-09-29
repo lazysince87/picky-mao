@@ -44,7 +44,6 @@ export default function RootLayout({ children }) {
           <main>
               {children}
           </main>
-      <body className={sniglet.className}>
         {/* Fixed Back to Homepage Button */}
         <div className="fixedButtonContainer">
           <Link href="/">
