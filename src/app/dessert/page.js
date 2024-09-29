@@ -83,7 +83,7 @@ const Filter = () => {
     };
 
     const handleSubmit = () => {
-        const decision = foodRestaurantDecision(lastSelections);
+        const decision = dessertRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision); // Store the result
     };
@@ -136,7 +136,7 @@ const Filter = () => {
                             Back
                         </button>
                         <button className="Final" onClick={handleSubmit}>
-                            Submit
+                            Cat cooks!
                         </button>
                     </div>
                 </div>
