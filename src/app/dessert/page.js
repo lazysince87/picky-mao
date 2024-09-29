@@ -1,6 +1,5 @@
 'use client'
 import React, { useState,useEffect } from 'react';
-import './button.css';
 import ButtonPair from './ButtonPair';
 
 
@@ -47,7 +46,7 @@ const Filter = () => {
 
     const backOptions = () => {
         setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Previous Pair
-
+    }
 
     const handleClick = (id) => {
         onButtonClick(id); // Call the parent click handler
@@ -93,7 +92,7 @@ const Filter = () => {
                 Submit
             </button>
         </div>
-    );
-};
+        );
+    };
 
 export default Filter;

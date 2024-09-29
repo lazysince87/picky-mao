@@ -1,6 +1,5 @@
 'use client'
 import React, { useState,useEffect } from 'react';
-import './button.css';
 import ButtonPair from './ButtonPair';
 
 
@@ -52,40 +51,15 @@ const Filter = () => {
             [currentPairIndex]: id,
         }));
     };
+    
 
     const backOptions = () => {
         setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
 
     };
 
-    const handleClick = (id) => {
-        onButtonClick(id); // Call the parent click handler
-        const updatedButtons = initialButtons.map(button => {
-        });
-        onNext(updatedButtons); // Update
-    };
     
-    const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
-        return (
-            <div>
-                {initialButtons.map(button => (
-                    <button
-                        key={button.id}
-                        onClick={() => {
-                            onButtonClick(button.id); // Call the handler with button ID
-                            const updatedButtons = initialButtons.map(b => {
-                                return b.id === button.id ? { ...b, opacity: 1 } : b;
-                            });
-                            onNext(updatedButtons); // Pass updated buttons back to Filter
-                        }}
-                         style={{ opacity: button.opacity }}
-                    >
-                        {button.label}
-                    </button>
-                ))}
-            </div>
-        );
-    };
+    
     return (
         <div className='buttonContainer'>
             {buttonPairs.length > 0 && (
