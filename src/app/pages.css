@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Sniglet');
+@import url('https://fonts.googleapis.com/css2?family=Sniglet:wght@400;800&display=swap');
 
 * {
   margin: 0;
@@ -51,6 +51,10 @@ body {
     background-color: rgb(254, 203, 203);
     border-radius: 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resultContainer {
+    color: rgb(211, 154, 217);
 }
 
 .Back {

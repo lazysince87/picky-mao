@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import dessertRestaurantDecision from '../backend/dessertFunction';
+import '../modal.css'
 import '../pages.css';
 
 const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
@@ -48,6 +49,7 @@ const Filter = () => {
     const [lastSelections, setLastSelections] = useState({});
     const [result, setResult] = useState(null);
     const [hideLastSet, setHideLastSet] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const calculatedResult = dessertRestaurantDecision(lastSelections);
@@ -86,6 +88,7 @@ const Filter = () => {
         const decision = dessertRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision); // Store the result
+        setIsModalOpen(true)
     };
     
     const ButtonPairComponent = ({ initialButtons, onNext, onButtonClick }) => {
@@ -144,9 +147,19 @@ const Filter = () => {
 
             {result && (
                 <div className="resultContainer">
-                    <h2>Recommended Restaurant:</h2>
-                    <p>{JSON.stringify(result)}</p>
+                    {/* Modal */}
+            <div className={`modal-overlay${isModalOpen ? '-visible' : ''}`}>
+              <div className={`modal${isModalOpen ? '-visible' : ''}`}>
+              <button className="exitButton" onClick={() => setIsModalOpen(false)}>
+                        ✖     
+                </button>
+                <h2>CAT COOKED!</h2>
+                <h2>Recommended Restaurant:
+                <p>{JSON.stringify(result)}</p>
+                </h2>
                 </div>
+                </div>
+            </div>
             )}
         </div>
     );

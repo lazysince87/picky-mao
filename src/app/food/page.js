@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import ButtonPair from '../ButtonPair'; 
-import '../pages.css'
 import foodRestaurantDecision from '../backend/foodFunction.js';
-
+import '../modal.css'
+import '../pages.css'
 
 
 const Filter = () => {
+
     const [buttonPairs, setButtonPairs] = useState([
         [
             { id: 'Now', label: 'Now', opacity: 1 },
@@ -38,6 +39,7 @@ const Filter = () => {
     const [result, setResult] = useState(null); // State to store the result
     const [hideLastSet, setHideLastSet] = useState(false); //Hiding last options
     const [catImage, setCatImage] = useState('/capochills.gif');
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
 
     const handleNextButtons = (newButtons) => {
@@ -68,11 +70,11 @@ const Filter = () => {
         }
     };
 
-    const handleSubmit = ()=> {
-        // const decision = foodRestaurantDecision(lastSelections);
+    const handleSubmit = () => {
         const decision = foodRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision); // Store the result
+        setIsModalOpen(true)
     };
     
     const ButtonPairComponent = ({ initialButtons, onNext, onButtonClick }) => {
@@ -129,8 +131,19 @@ const Filter = () => {
             </div>
             {result && (
                 <div className="resultContainer">
-                    <h2>Recommended Restaurant:</h2>
-                    <p>{JSON.stringify(result)}</p>
+    
+            {/* Modal */}
+            <div className={`modal-overlay${isModalOpen ? '-visible' : ''}`}>
+              <div className={`modal${isModalOpen ? '-visible' : ''}`}>
+                <button className="exitButton" onClick={() => setIsModalOpen(false)}>
+                        ✖     
+                </button>
+                <h2>CAT COOKED!</h2>
+                <h2>Recommended Restaurant:
+                <p>{JSON.stringify(result)}</p>
+                </h2>
+              </div>
+            </div>
                 </div>
             )}
         </div>
