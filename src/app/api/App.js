@@ -18,7 +18,7 @@ const containerStyle = {
 // ];
 
 
-function App() {
+function App(inputString) {
   const [map, setMap] = React.useState(null)
   const [directions, setDirections] = useState(null)
   const [points, setPoints] = useState([  {
@@ -56,7 +56,7 @@ function App() {
         origin: waypoints[0],
         destination: waypoints[1],
         waypoints: waypoints.slice(2),
-        travelMode: window.google.maps.TravelMode.DRIVING
+        travelMode: window.google.maps.TravelMode.WALKING
       }
 
       const res = await directionsService.route(request)
@@ -70,7 +70,7 @@ function App() {
   const fetchPlaces = () => {
     if (isLoaded && map) {
       const request = {
-        query: "raising canes university of florida",
+        query: inputString + "university of florida",
         fields: ['geometry', 'name']
       };
 

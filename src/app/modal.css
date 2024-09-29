@@ -95,6 +95,11 @@
   background-color: #d4a8cc; /* Darker shade on hover */
 }
 
+.api {
+  height: 200px;
+  width: 300px;
+}
+
 
 @keyframes fadeIn {
     from {

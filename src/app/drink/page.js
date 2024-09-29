@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import drinkRestaurantDecision from '../backend/dessertFunction';
+import App from '../api/App'
 import '../modal.css'
 import '../pages.css';
 
@@ -133,6 +134,7 @@ const Filter = () => {
               <button className="exitButton" onClick={() => setIsModalOpen(false)}>
                         ✖     
                 </button>
+                <App className='api'></App>
                 <h2>CAT COOKED!</h2>
                 <h2>Recommended Restaurant:
                 <p>{JSON.stringify(result)}</p>

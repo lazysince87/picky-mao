@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import dessertRestaurantDecision from '../backend/dessertFunction';
+import App from '../api/App'
 import '../modal.css'
 import '../pages.css';
 
@@ -89,8 +90,12 @@ const Filter = () => {
         console.log("Decision:", decision);
         setResult(decision); // Store the result
         setIsModalOpen(true)
+
+        const direction = App(decision.name)
+        setResult(direction)
     };
     
+
     const ButtonPairComponent = ({ initialButtons, onNext, onButtonClick }) => {
     return (
         <div>
@@ -153,6 +158,7 @@ const Filter = () => {
               <button className="exitButton" onClick={() => setIsModalOpen(false)}>
                         ✖     
                 </button>
+                <App className='api'></App>
                 <h2>CAT COOKED!</h2>
                 <h2>Recommended Restaurant:
                 <p>{JSON.stringify(result)}</p>
