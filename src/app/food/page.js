@@ -36,6 +36,7 @@ const Filter = () => {
     const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
     const [lastSelections, setLastSelections] = useState({});
     const [result, setResult] = useState(null); // State to store the result
+    const [hideLastSet, setHideLastSet] = useState(false); //Hiding last options
     const [catImage, setCatImage] = useState('/capochills.gif');
 
     const handleNextButtons = (newButtons) => {
@@ -46,6 +47,8 @@ const Filter = () => {
         // Move to the next pair if there is one
         if (currentPairIndex < buttonPairs.length - 1) {
             setCurrentPairIndex(currentPairIndex + 1);
+        } else {
+            setHideLastSet(true);
         }
     };
 
@@ -58,8 +61,10 @@ const Filter = () => {
     };
 
     const backOptions = () => {
-        setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
-
+        if (currentPairIndex > 0) {
+            setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
+            setHideLastSet(false);
+        }
     };
 
     const handleSubmit = ()=> {
@@ -68,15 +73,8 @@ const Filter = () => {
         console.log("Decision:", decision);
         setResult(decision); // Store the result
     };
-
-    const handleClick = (id) => {
-        onButtonClick(id); // Call the parent click handler
-        const updatedButtons = initialButtons.map(button => {
-        });
-        onNext(updatedButtons); // Update
-    };
     
-    const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
+    const ButtonPairComponent = ({ initialButtons, onNext, onButtonClick }) => {
         return (
             <div>
                 {initialButtons.map(button => (
@@ -85,9 +83,10 @@ const Filter = () => {
                         key={button.id}
                         onClick={() => {
                             onButtonClick(button.id); // Call the handler with button ID
-                            const updatedButtons = initialButtons.map(b => {
-                                return b.id === button.id ? { ...b, opacity: 1 } : b;
-                            });
+                            const updatedButtons = initialButtons.map(b => ({
+                                ...b,
+                                opacity: b.id === button.id ? 1  : b.opacity,
+                            }));
                             onNext(updatedButtons); // Pass updated buttons back to Filter
                         }}
                          style={{ opacity: button.opacity }}
@@ -99,45 +98,38 @@ const Filter = () => {
         );
     };
     return (
-        <div className='body'>
+        <div className = 'body'>
             <div className='buttonBox'>
                 <Image
                 className='catimg'
-                src='/capochills.gif'
+                src={catImage}
                 alt='Picky Mao Cooks'
                 width={400}
                 height={400}
                 style={{ objectFit: 'contain', width: 'auto' }}
             />
             <div className='buttonContainer'>
-            {buttonPairs.length > 0 && (
-                <><ButtonPair
+            {!hideLastSet && buttonPairs.length > 0 && (
+                <ButtonPairComponent
                                 initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
                                 onNext={handleNextButtons} // Pass the handler for new buttons
                                 onButtonClick={handleButtonClick} // Pass button click handler
-                            /><div>
-                                    {buttonPairs.length > 0 && (
-                                        <ButtonPair
-                                            initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
-                                            onNext={handleNextButtons} // Pass the handler for new buttons
-                                        />
-                                    )}
-                                    <div className ='submitBtn'>
-                                    <button className="Back" onClick={backOptions}>
-                                        Back
-                                    </button>
-                                    <button className="Final" onClick={handleSubmit}>
-                                    Submit
-                                </button>
-                                </div>
-                                </div></>
-            )}
+                            />
+                        )}
+                        <div className ='submitBtn'>
+                            <button className="Back" onClick={backOptions}>
+                                Back
+                            </button>
+                            <button className="Final" onClick={handleSubmit}>
+                            Submit
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
             {result && (
                 <div className="resultContainer">
                     <h2>Recommended Restaurant:</h2>
-                    <p>{JSON.stringify(result)}</p> {/* Display the result here */}
+                    <p>{JSON.stringify(result)}</p>
                 </div>
             )}
         </div>

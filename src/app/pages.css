@@ -57,11 +57,11 @@ body {
     margin-top: 20px;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 7px;
     background-color: #e3b4da; /* Primary button color */
     color: white;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 19px;
     transition: background-color 0.3s;
 }
 
@@ -73,11 +73,11 @@ body {
     margin-top: 20px;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 7px;
     background-color: #e3b4da; 
     color: white;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 19px;
     transition: background-color 0.3s;
 }
 
@@ -106,7 +106,7 @@ body {
     margin: 0 10px;
     padding: 15px 30px;
     border: none;
-    border-radius: 5px;
+    border-radius: 9px;
     background-color: #eea697; 
     color: white;
     font-size: 24px;
