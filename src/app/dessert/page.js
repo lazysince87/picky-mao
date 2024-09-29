@@ -57,6 +57,13 @@ const Filter = () => {
 
     };
 
+    const handleSubmit = ()=> {
+        // const decision = foodRestaurantDecision(lastSelections);
+        const decision = foodRestaurantDecision(lastSelections);
+        console.log("Decision:", decision);
+        setResult(decision); // Store the result
+    };
+
     const handleClick = (id) => {
         onButtonClick(id); // Call the parent click handler
         const updatedButtons = initialButtons.map(button => {
@@ -110,16 +117,18 @@ const Filter = () => {
                                             onNext={handleNextButtons} 
                                         />
                                     )}
+                                    <div className ='submitBtn'>
                                     <button className="Back" onClick={backOptions}>
                                         Back
                                     </button>
+                                    <button className="Final" onClick={handleSubmit}>
+                                        Submit
+                                    </button>
+                                    </div>
                                 </div></>
             )}
             </div>
         </div>
-            <button className="Final" onClick={handleSubmit}>
-                Submit
-            </button>
             {result && (
                 <div className="resultContainer">
                     <h2>Recommended Restaurant:</h2>

@@ -112,19 +112,21 @@ const Filter = () => {
                                 initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
                                 onNext={handleNextButtons} // Pass the handler for new buttons
                                 onButtonClick={handleButtonClick} // Pass button click handler
-                            /><div className='buttonContainer'>
+                            /><div>
                                     {buttonPairs.length > 0 && (
                                         <ButtonPair
                                             initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
                                             onNext={handleNextButtons} // Pass the handler for new buttons
                                         />
                                     )}
+                                    <div className ='submitBtn'>
                                     <button className="Back" onClick={backOptions}>
                                         Back
                                     </button>
                                     <button className="Final" onClick={handleSubmit}>
                                     Submit
                                 </button>
+                                </div>
                                 </div></>
             )}
             </div>

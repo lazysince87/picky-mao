@@ -1,7 +1,8 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../pages.css'
 import ButtonPair from '../ButtonPair'; 
+import  dessertRestaurantDecision  from '../backend/dessertFunction';
 import Image from 'next/image'
 
     const Filter = () => {
@@ -55,6 +56,13 @@ import Image from 'next/image'
             setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Previous Pair
     
         };
+
+        const handleSubmit = ()=> {
+            // const decision = foodRestaurantDecision(lastSelections);
+            const decision = foodRestaurantDecision(lastSelections);
+            console.log("Decision:", decision);
+            setResult(decision); // Store the result
+        };
     
         const handleClick = (id) => {
             onButtonClick(id); // Call the parent click handler
@@ -90,7 +98,7 @@ import Image from 'next/image'
                 <div className='buttonBox'>
                     <Image
                     className='catimg'
-                    src='/capodrinks.gif'
+                    src='/capodrank.gif'
                     alt='Picky Mao Eats'
                     width={400}
                     height={400}
@@ -109,16 +117,19 @@ import Image from 'next/image'
                                                 onNext={handleNextButtons} // Pass the handler for new buttons
                                             />
                                         )}
-                                        <button className="Back" onClick={backOptions}>
-                                            Back
-                                        </button>
+                                        <div className ='submitBtn'>
+                                    <button className="Back" onClick={backOptions}>
+                                        Back
+                                    </button>
+                                    <button className="Final" onClick={handleSubmit}>
+                                        Submit
+                                    </button>
+                                    </div>
                                     </div></>
                 )}
                 </div>
             </div>
-                <button className="Final" onClick={handleSubmit}>
-                    Submit
-                </button>
+
                 {result && (
                     <div className="resultContainer">
                         <h2>Recommended Restaurant:</h2>
