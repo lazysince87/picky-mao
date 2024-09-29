@@ -1,8 +1,7 @@
 import { Sniglet } from "next/font/google";
 import Link from 'next/link'; 
-import Image from 'next/image';
 import "./globals.css";
-
+import HoverImage from './components/HoverImage'; // Import the new component
 
 const snigletBold = Sniglet({
   subsets: ["latin"],
@@ -15,7 +14,7 @@ const snigletRegular = Sniglet({
 });
 
 export const metadata = {
-  title: "Picky Mao", // Title of the website
+  title: "Picky Mao",
   creator: "Picky Mao",
   keywords: [
     'Picky Mao',
@@ -39,29 +38,19 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
   return (
     <html lang="en">
       <body className={`${snigletBold.className} ${snigletRegular.className}`}>
         {/* Fixed Back to Homepage Button */}
         <div className="fixedButtonContainer">
           <Link href="/">
-            <div className="imageWrapper">
-              <Image 
-                  src="/homeCatIMG.png"
-                  alt="Home"
-                  width={70}
-                  height={70}
-                  className="homepageImage"
-                />
-                <Image
-                  src="/homeCatHover.png"
-                  alt="Home"
-                  width={90}
-                  height={90}
-                  className="hoverImage"
-                  />
-            </div>
+            <HoverImage 
+              src="/homeCatIMG.png"
+              hoverSrc="/homeCatHover.png"
+              alt="Home"
+              width={70}
+              height={70}
+            />
           </Link>
         </div>
         <main>
