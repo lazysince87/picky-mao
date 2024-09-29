@@ -18,7 +18,7 @@ const containerStyle = {
 // ];
 
 
-function App(inputString) {
+function App() {
   const [map, setMap] = React.useState(null)
   const [directions, setDirections] = useState(null)
   const [points, setPoints] = useState([  {
@@ -28,10 +28,11 @@ function App(inputString) {
     },
     {
     }, ]);
+  const [inputString, setInputString] = useState(initialQuery);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyAI1aGvbPiIxDXZzzNaTEpb_3m0LXKljmw",
+    googleMapsApiKey: "",
     libraries: ['places']
   })
 
@@ -70,7 +71,7 @@ function App(inputString) {
   const fetchPlaces = () => {
     if (isLoaded && map) {
       const request = {
-        query: inputString + "university of florida",
+        query: "raising canes university of florida",
         fields: ['geometry', 'name']
       };
 
@@ -87,10 +88,6 @@ function App(inputString) {
 
           // Update points to include the new location
           setPoints([points[0], newPoint]);
-          
-          // points[1] = newPoint;
-
-          console.log(newPoint);
         } else {
           console.error("Places service status:", status);
         }
@@ -101,7 +98,7 @@ function App(inputString) {
 
   useEffect(() => {
     fetchPlaces();
-  }, [isLoaded, map]);
+  }, [isLoaded, map, inputString]);
 
   useEffect(()=>{
     calculateDirections()
