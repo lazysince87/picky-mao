@@ -61,7 +61,7 @@ body {
     background-color: #e3b4da; /* Primary button color */
     color: white;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 24px;
     transition: background-color 0.3s;
 }
 
@@ -77,7 +77,7 @@ body {
     background-color: #e3b4da; 
     color: white;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 24px;
     transition: background-color 0.3s;
 }
 
@@ -89,6 +89,8 @@ body {
     display: flex;
     flex: row;
     justify-content: space-between;
+    gap: 20px;
+    font-size: 24px;
 }
 
 .buttonPair {
@@ -107,7 +109,7 @@ body {
     border-radius: 5px;
     background-color: #eea697; 
     color: white;
-    font-size: 16px;
+    font-size: 24px;
     cursor: pointer;
     transition: background-color 0.3s, opacity 0.3s;
 }

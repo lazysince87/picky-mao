@@ -1,9 +1,31 @@
 'use client'
-import React, { useState,useEffect } from 'react';
-import Image from 'next/image'
-import ButtonPair from '../ButtonPair'; 
-import  dessertRestaurantDecision  from '../backend/dessertFunction';
-import '../pages.css'
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import dessertRestaurantDecision from '../backend/dessertFunction';
+import '../pages.css';
+
+const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
+    return (
+        <div>
+            {initialButtons.map(button => (
+                <button
+                    key={button.id}
+                    onClick={() => {
+                        onButtonClick(button.id); // Call the handler with button ID
+                        const updatedButtons = initialButtons.map(b => ({
+                            ...b,
+                            opacity: b.id === button.id ? 1 : b.opacity, // Set opacity for clicked button
+                        }));
+                        onNext(updatedButtons); // Pass updated buttons back to Filter
+                    }}
+                    style={{ opacity: button.opacity }}
+                >
+                    {button.label}
+                </button>
+            ))}
+        </div>
+    );
+};
 
 const Filter = () => {
     const [buttonPairs, setButtonPairs] = useState([
@@ -12,39 +34,34 @@ const Filter = () => {
             { id: 'Later', label: 'Later', opacity: 1 },
         ],
         [
-            { id: 'Iced', label: 'Iced', opacity: 1 },
-            { id: 'Pastry', label: 'Pastry', opacity: 1 },
+            { id: 'gourmet', label: 'Iced', opacity: 1 },
+            { id: 'fast food', label: 'Pastry', opacity: 1 },
         ],
         [
-          { id: 1, label: 'Within 1 mile', opacity: 1},
-          { id: 2, label: 'Within 3 miles', opacity: 1},
-          { id: 3, label: '3+ miles', opacity: 1},
-
+            { id: 1, label: 'Within 1 mile', opacity: 1 },
+            { id: 2, label: 'Within 3 miles', opacity: 1 },
+            { id: 3, label: '3+ miles', opacity: 1 },
         ],
     ]);
 
-    const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
+    const [currentPairIndex, setCurrentPairIndex] = useState(0);
     const [lastSelections, setLastSelections] = useState({});
-    const [result, setResult] = useState(null); // To store the result
+    const [result, setResult] = useState(null);
 
     useEffect(() => {
-        // Calculate result whenever lastSelections changes
         const calculatedResult = dessertRestaurantDecision(lastSelections);
         setResult(calculatedResult);
     }, [lastSelections]);
 
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
-        updatedPairs[currentPairIndex] = newButtons; // Update the current pair with new buttons
+        updatedPairs[currentPairIndex] = newButtons; 
         setButtonPairs(updatedPairs);
 
-        // Move to the next pair if there is one
         if (currentPairIndex < buttonPairs.length - 1) {
             setCurrentPairIndex(currentPairIndex + 1);
         }
     };
-
-
 
     const handleButtonClick = (id) => {
         setLastSelections((prevSelections) => ({
@@ -52,88 +69,32 @@ const Filter = () => {
             [currentPairIndex]: id,
         }));
     };
+
     const backOptions = () => {
-        setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Previous Pair
-
+        setCurrentPairIndex((prevIndex) => Math.max(prevIndex - 1, 0));
     };
 
-    const handleSubmit = ()=> {
-        // const decision = foodRestaurantDecision(lastSelections);
-        const decision = foodRestaurantDecision(lastSelections);
-        console.log("Decision:", decision);
-        setResult(decision); // Store the result
+    const handleSubmit = () => {
+        console.log(lastSelections); // You can handle submit logic here
     };
 
-    const handleClick = (id) => {
-        onButtonClick(id); // Call the parent click handler
-        const updatedButtons = initialButtons.map(button => {
-        });
-        onNext(updatedButtons); // Update
-    };
-    
-    const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
-        return (
-            <div>
-                {initialButtons.map(button => (
-                    <button
-                        className='button'
-                        key={button.id}
-                        onClick={() => {
-                            onButtonClick(button.id); // Call the handler with button ID
-                            const updatedButtons = initialButtons.map(b => {
-                                return b.id === button.id ? { ...b, opacity: 1 } : b;
-                            });
-                            onNext(updatedButtons); // Pass updated buttons back to Filter
-                        }}
-                         style={{ opacity: button.opacity }}
-                    >
-                        {button.label}
-                    </button>
-                ))}
-            </div>
-        );
-    };
     return (
-        <div className='body'>
-            <div className='buttonBox'>
-                <Image
-                className='catimg'
-                src='/capoeats.gif'
-                alt='Picky Mao Eats'
-                width={400}
-                height={400}
-                style={{ objectFit: 'contain', width: 'auto' }}
-            />
-            <div className='buttonContainer'>
+        <div className='buttonContainer'>
             {buttonPairs.length > 0 && (
-                <><ButtonPair
-                                initialButtons={buttonPairs[currentPairIndex]} 
-                                onNext={handleNextButtons} 
-                                onButtonClick={handleButtonClick} // Pass button click handler
-                            /><div>
-                                    {buttonPairs.length > 0 && (
-                                        <ButtonPair
-                                            initialButtons={buttonPairs[currentPairIndex]} 
-                                            onNext={handleNextButtons} 
-                                        />
-                                    )}
-                                    <div className ='submitBtn'>
-                                    <button className="Back" onClick={backOptions}>
-                                        Back
-                                    </button>
-                                    <button className="Final" onClick={handleSubmit}>
-                                        Submit
-                                    </button>
-                                    </div>
-                                </div></>
+                <ButtonPair
+                    initialButtons={buttonPairs[currentPairIndex]}
+                    onNext={handleNextButtons}
+                    onButtonClick={handleButtonClick}
+                />
             )}
-            </div>
-        </div>
+            <button className="Back" onClick={backOptions}>
+                Back
+            </button>
+            <button className="Final" onClick={handleSubmit}>
+                Submit
+            </button>
             {result && (
-                <div className="resultContainer">
-                    <h2>Recommended Restaurant:</h2>
-                    <p>{JSON.stringify(result)}</p> 
-                </div>
+                <h1>{JSON.stringify(result)}</h1> // Display result
             )}
         </div>
     );
