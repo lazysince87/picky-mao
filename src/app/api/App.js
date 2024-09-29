@@ -1,0 +1,138 @@
+import React, { useState, useEffect, useMemo} from 'react'
+import { GoogleMap, useJsApiLoader, MarkerF, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
+
+const containerStyle = {
+  width: '1000px',
+  height: '550px'
+};
+
+// const points = [
+//   {
+//   lat: 29.646721735263835, 
+//   lng: -82.34800087537447
+//   },
+//   {
+//   lat: 29.6361750337593,
+//   lng: -82.36972897352743
+// }, 
+// ];
+
+
+function App() {
+  const [map, setMap] = React.useState(null)
+  const [directions, setDirections] = useState(null)
+  const [points, setPoints] = useState([  {
+    // marston science library
+    lat: 29.648618126772757, 
+    lng: -82.34370328886838
+    },
+    {
+    }, ]);
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: "AIzaSyAI1aGvbPiIxDXZzzNaTEpb_3m0LXKljmw",
+    libraries: ['places']
+  })
+
+  const center = {
+    lat: 29.648618126772757,
+    lng: -82.34370328886838
+  };
+  
+  const calculateDirections = async() => {
+    if(isLoaded && points.length > 1 && points[1] != {}) {
+      const directionsService = new window.google.maps.DirectionsService()
+      console.log(points);
+
+      const waypoints = points.map((point) => {
+        return {lat: point.lat, lng: point.lng};
+      });
+
+      console.log(waypoints[0]);
+
+
+      const request = {
+        origin: waypoints[0],
+        destination: waypoints[1],
+        waypoints: waypoints.slice(2),
+        travelMode: window.google.maps.TravelMode.DRIVING
+      }
+
+      const res = await directionsService.route(request)
+
+      if(res.status === "OK") {
+        setDirections(res)
+      }
+    }
+  }
+
+  const fetchPlaces = () => {
+    if (isLoaded && map) {
+      const request = {
+        query: "raising canes university of florida",
+        fields: ['geometry', 'name']
+      };
+
+      const service = new window.google.maps.places.PlacesService(map);
+      service.findPlaceFromQuery(request, (results, status) => {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+          const location = results[0];
+          const newPoint = {
+            lat: location.geometry.location.lat(),
+            lng: location.geometry.location.lng()
+          };
+          
+          setDirections(null);
+
+          // Update points to include the new location
+          setPoints([points[0], newPoint]);
+          
+          // points[1] = newPoint;
+
+          console.log(newPoint);
+        } else {
+          console.error("Places service status:", status);
+        }
+      });
+    }
+  };
+
+
+  useEffect(() => {
+    fetchPlaces();
+  }, [isLoaded, map]);
+
+  useEffect(()=>{
+    calculateDirections()
+  },[points])
+
+
+  return isLoaded ? (
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+        onLoad={(map)=>setMap(map)}
+        options={{
+          streetViewControl: false,
+          mapTypeControl: false
+        }}
+      >
+        {
+          directions && (
+            <DirectionsRenderer directions={directions} />
+          )
+        }
+        {/* {points.map((point) => (
+          <MarkerF position={point}></MarkerF>
+        ))} */}
+
+        {/* <MarkerF position={center}></MarkerF> */}
+        { /* Child components, such as markers, info windows, etc. */ }
+        <></>
+      </GoogleMap>
+  ) : <></>
+}
+
+export default React.memo(App)
