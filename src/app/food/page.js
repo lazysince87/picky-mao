@@ -35,6 +35,7 @@ const Filter = () => {
     const [result, setResult] = useState(null);
     const [hideLastSet, setHideLastSet] = useState(false); // New state for hiding last set
 
+
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
         updatedPairs[currentPairIndex] = newButtons; 
