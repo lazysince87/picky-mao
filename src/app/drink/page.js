@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import dessertRestaurantDecision from '../backend/dessertFunction';
+import drinkRestaurantDecision from '../backend/dessertFunction';
 import '../pages.css';
 
 const Filter = () => {
@@ -27,7 +27,7 @@ const Filter = () => {
     const [hideLastSet, setHideLastSet] = useState(false); // State for hiding last set
 
     useEffect(() => {
-        const calculatedResult = dessertRestaurantDecision(lastSelections);
+        const calculatedResult = drinkRestaurantDecision(lastSelections);
         setResult(calculatedResult);
     }, [lastSelections]);
 
@@ -63,7 +63,7 @@ const Filter = () => {
     };
 
     const handleSubmit = () => {
-        const decision = dessertRestaurantDecision(lastSelections);
+        const decision = drinkRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision);
     };

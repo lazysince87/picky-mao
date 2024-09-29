@@ -1,9 +1,11 @@
 'use client'
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image'
 import ButtonPair from '../ButtonPair'; 
-import '../pages.css';
+import '../pages.css'
 import foodRestaurantDecision from '../backend/foodFunction.js';
+
+
 
 const Filter = () => {
     const [buttonPairs, setButtonPairs] = useState([
@@ -17,34 +19,35 @@ const Filter = () => {
             { id: 'buffet', label: 'Buffet', opacity: 1 },
         ],
         [
-            { id: 'asian', label: 'Asian', opacity: 1 },
-            { id: 'hispanic', label: 'Hispanic', opacity: 1 },
-            { id: 'american', label: 'American', opacity: 1 },
-            { id: 'european', label: 'European', opacity: 1 },
-            { id: 'Any', label: 'Any', opacity: 1 },
+            { id: 'asian', label: 'Asian', opacity: 1},
+            { id: 'hispanic', label: 'Hispanic', opacity: 1},
+            { id: 'american', label: 'American', opacity: 1},
+            { id: 'european', label: 'European', opacity: 1},
+            { id: 'Any', label: 'Any', opacity: 1},
         ],
         [
-            { id: 1, label: 'Within 1 mile', opacity: 1 },
-            { id: 2, label: 'Within 2 miles', opacity: 1 },
-            { id: 3, label: 'Within 3+ miles', opacity: 1 },
+          { id: 1, label: 'Within 1 mile', opacity: 1},
+          { id: 2, label: 'Within 2 miles', opacity: 1},
+          { id: 3, label: 'Within 3+ miles', opacity: 1},
+
         ],
     ]);
 
-    const [currentPairIndex, setCurrentPairIndex] = useState(0);
+    const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
     const [lastSelections, setLastSelections] = useState({});
-    const [result, setResult] = useState(null);
-    const [hideLastSet, setHideLastSet] = useState(false); // New state for hiding last set
+    const [result, setResult] = useState(null); // State to store the result
+    const [hideLastSet, setHideLastSet] = useState(false); //Hiding last options
+    const [catImage, setCatImage] = useState('/capochills.gif');
 
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
-        updatedPairs[currentPairIndex] = newButtons; 
+        updatedPairs[currentPairIndex] = newButtons; // Update the current pair with new buttons
         setButtonPairs(updatedPairs);
 
         // Move to the next pair if there is one
         if (currentPairIndex < buttonPairs.length - 1) {
             setCurrentPairIndex(currentPairIndex + 1);
         } else {
-            // If we are at the last pair, set hideLastSet to true
             setHideLastSet(true);
         }
     };
@@ -54,21 +57,23 @@ const Filter = () => {
             ...prevSelections,
             [currentPairIndex]: id,
         }));
+        setCatImage('/capoates.gif');
     };
 
     const backOptions = () => {
         if (currentPairIndex > 0) {
-            setCurrentPairIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-            setHideLastSet(false); // Show buttons again when going back
+            setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
+            setHideLastSet(false);
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = ()=> {
+        // const decision = foodRestaurantDecision(lastSelections);
         const decision = foodRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
-        setResult(decision);
+        setResult(decision); // Store the result
     };
-
+    
     const ButtonPairComponent = ({ initialButtons, onNext, onButtonClick }) => {
         return (
             <div>
@@ -77,14 +82,14 @@ const Filter = () => {
                         className='button'
                         key={button.id}
                         onClick={() => {
-                            onButtonClick(button.id);
+                            onButtonClick(button.id); // Call the handler with button ID
                             const updatedButtons = initialButtons.map(b => ({
                                 ...b,
-                                opacity: b.id === button.id ? 1 : b.opacity,
+                                opacity: b.id === button.id ? 1  : b.opacity,
                             }));
-                            onNext(updatedButtons);
+                            onNext(updatedButtons); // Pass updated buttons back to Filter
                         }}
-                        style={{ opacity: button.opacity }}
+                         style={{ opacity: button.opacity }}
                     >
                         {button.label}
                     </button>
@@ -92,31 +97,30 @@ const Filter = () => {
             </div>
         );
     };
-
     return (
-        <div className='body'>
+        <div className = 'body'>
             <div className='buttonBox'>
                 <Image
-                    className='catimg'
-                    src='/capochills.gif'
-                    alt='Picky Mao Cooks'
-                    width={400}
-                    height={400}
-                    style={{ objectFit: 'contain', width: 'auto' }}
-                />
-                <div className='buttonContainer'>
-                    {!hideLastSet && buttonPairs.length > 0 && (
-                        <ButtonPairComponent
-                            initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
-                            onNext={handleNextButtons} // Pass the handler for new buttons
-                            onButtonClick={handleButtonClick} // Pass button click handler
-                        />
-                    )}
-                    <div className='submitBtn'>
-                        <button className="Back" onClick={backOptions}>
-                            Back
-                        </button>
-                        <button className="Final" onClick={handleSubmit}>
+                className='catimg'
+                src={catImage}
+                alt='Picky Mao Cooks'
+                width={400}
+                height={400}
+                style={{ objectFit: 'contain', width: 'auto' }}
+            />
+            <div className='buttonContainer'>
+            {!hideLastSet && buttonPairs.length > 0 && (
+                <ButtonPairComponent
+                                initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
+                                onNext={handleNextButtons} // Pass the handler for new buttons
+                                onButtonClick={handleButtonClick} // Pass button click handler
+                            />
+                        )}
+                        <div className ='submitBtn'>
+                            <button className="Back" onClick={backOptions}>
+                                Back
+                            </button>
+                            <button className="Final" onClick={handleSubmit}>
                             Submit
                         </button>
                     </div>
