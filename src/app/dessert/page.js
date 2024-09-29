@@ -1,5 +1,6 @@
 'use client'
 import React, { useState,useEffect } from 'react';
+import Image from 'next/image'
 import ButtonPair from '../ButtonPair'; 
 import  dessertRestaurantDecision  from '../backend/dessertFunction';
 import '../pages.css'
@@ -11,8 +12,8 @@ const Filter = () => {
             { id: 'Later', label: 'Later', opacity: 1 },
         ],
         [
-            { id: 'gourmet', label: 'Iced', opacity: 1 },
-            { id: 'fast food', label: 'Paestry', opacity: 1 },
+            { id: 'Iced', label: 'Iced', opacity: 1 },
+            { id: 'Pastry', label: 'Pastry', opacity: 1 },
         ],
         [
           { id: 1, label: 'Within 1 mile', opacity: 1},
@@ -68,6 +69,7 @@ const Filter = () => {
             <div>
                 {initialButtons.map(button => (
                     <button
+                        className='button'
                         key={button.id}
                         onClick={() => {
                             onButtonClick(button.id); // Call the handler with button ID
@@ -85,24 +87,47 @@ const Filter = () => {
         );
     };
     return (
-        <div className='buttonContainer'>
+        <div className='body'>
+            <div className='buttonBox'>
+                <Image
+                className='catimg'
+                src='/capoeats.gif'
+                alt='Picky Mao Eats'
+                width={400}
+                height={400}
+                style={{ objectFit: 'contain', width: 'auto' }}
+            />
+            <div className='buttonContainer'>
             {buttonPairs.length > 0 && (
-                <ButtonPair
-                    initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
-                    onNext={handleNextButtons} // Pass the handler for new buttons
-                    onButtonClick={handleButtonClick} // Pass button click handler
-                />
+                <><ButtonPair
+                                initialButtons={buttonPairs[currentPairIndex]} 
+                                onNext={handleNextButtons} 
+                                onButtonClick={handleButtonClick} // Pass button click handler
+                            /><div>
+                                    {buttonPairs.length > 0 && (
+                                        <ButtonPair
+                                            initialButtons={buttonPairs[currentPairIndex]} 
+                                            onNext={handleNextButtons} 
+                                        />
+                                    )}
+                                    <button className="Back" onClick={backOptions}>
+                                        Back
+                                    </button>
+                                </div></>
             )}
-            <button className="Back" onClick={backOptions}>
-                Back
-            </button>
-            <button className="Final" onClick={() => console.log(lastSelections)}>
+            </div>
+        </div>
+            <button className="Final" onClick={handleSubmit}>
                 Submit
             </button>
-            <h1>{result}</h1>
+            {result && (
+                <div className="resultContainer">
+                    <h2>Recommended Restaurant:</h2>
+                    <p>{JSON.stringify(result)}</p> 
+                </div>
+            )}
         </div>
     );
 };
-
 
 export default Filter;
