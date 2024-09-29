@@ -1,20 +1,21 @@
 import dayjs from 'dayjs';
+import gnvDessert from '../backend/dessertData.js';
 
 export default function dessertRestaurantDecision(filterWords) {
+  let narrowedChoices = [];
+
+  let finalChoices = [];
+
   function dessertFinder(filterWords) {
-    let narrowedChoices = [];
-  
     distanceFilter(filterWords, gnvDessert);
   
-    let finalChoices = [];
-  
-    narrowedChoices.forEach((restuarant) => {
-      if((filterWords.dessertType === restuarant.dessertType) || (filterWords.dessertType === "Any")) {
-        if((filterWords.nowOrLater === "now") && getTime(gnvDessert)) {
-          finalChoices.push(restuarant);
+    narrowedChoices.forEach((restaurant) => {
+      if((filterWords[1] === restaurant.dessertType) || (filterWords.dessertType === "Any")) {
+        if((filterWords[0] === "now") && getTime(restaurant)) {
+          finalChoices.push(restaurant);
         }
         else {
-          finalChoices.push(restuarant);
+          finalChoices.push(restaurant);
         }
       }
     })
@@ -26,94 +27,36 @@ export default function dessertRestaurantDecision(filterWords) {
     }
   };
   
-  function getTime(foodList) {
+  function getTime(restaurant) {
     let hour = dayjs().hour();
     let hourString = hour.format('H');
     let hourFloat = parseFloat(hourString);
     
-    if(hourFloat > foodList.openTime && hourFloat < foodList.closeTime) {
+    if(hourFloat >= restaurant.openTime && hourFloat < restaurant.closeTime) {
       return true;
     }
     return false
   }
   
-  function distanceFilter(filterWords, foodList) {
-    if(filterWords.distance === 1) {
-      foodList.forEach((restuarant) => {
-        if(restuarant.distance <= 1.0) {
-          finalChoices.push(restuarant);
+  function distanceFilter(filterWords, gnvDessert) {
+    if(filterWords[2] === 1) {
+      gnvDessert.forEach((restaurant) => {
+        if(restaurant.distance <= 1.0) {
+          narrowedChoices.push(restaurant);
         }
       })
-    } else if(filterWords.distance === 2) {
-      foodList.forEach((restuarant) => {
-        if(restuarant.distance <= 3.0) {
-          finalChoices.push(restuarant);
+    } else if(filterWords[2] === 2) {
+      gnvDessert.forEach((restaurant) => {
+        if(restaurant.distance <= 3.0) {
+          narrowedChoices.push(restaurant);
         }
       })
     } else {
-      foodList.forEach((restuarant) => {
-        if(restuarant.distance > 3.0) {
-          finalChoices.push(restuarant);
-        }
+      gnvDessert.forEach((restaurant) => {
+        finalChoices.push(restaurant);
       })
     }
   };
-};
 
-const gnvDessert = [
-  {
-    name: "Dolce Vita Bakery Cafe",
-    distance: 5.4,
-    openTime: 7.5,
-    closeTime: 17.0,
-    dessertType: "pastery"
-  }, {
-    name: "Gigi's Cupcakes Gainesville",
-    distance: 3.2,
-    openTime: 10.0,
-    closeTime: 20.0,
-    dessertType: "pastery"
-  }, {
-    name: "Insomnia Cookies",
-    distance: 0.6,
-    openTime: 11.0,
-    closeTime: 25.0,
-    dessertType: "pastery"
-  }, {
-    name: "Zero Degrees",
-    distance: 2.8,
-    openTime: 12.0,
-    closeTime: 22.0,
-    dessertType: "iced"
-  }, {
-    name: "The Hyppo Gainesville",
-    distance: 2.0,
-    openTime: 12.0,
-    closeTime: 22.0,
-    dessertType: "iced"
-  }, {
-    name: "Jeremiah's Italian Ice",
-    distance: 3.3,
-    openTime: 12.0,
-    closeTime: 22.0,
-    dessertType: "iced"
-  }, {
-    name: "SweetBerries Eatery and Frozen Custurd",
-    distance: 3.3,
-    openTime: 8.0,
-    closeTime: 16.5,
-    dessertType: "iced"
-  }, {
-    name: "Frosty Fox",
-    distance: 3.0,
-    openTime: 12.0,
-    closeTime: 22.0,
-    dessertType: "iced"
-  }, {
-    name: "Just Celebrate LLC",
-    distance: 4.4,
-    openTime: 11.0,
-    closeTime: 18.0,
-    dessertType: "pastry"
-  }
-]
+  return dessertFinder(filterWords);
+};
