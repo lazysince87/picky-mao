@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import "./globals.css";
 
+
 const snigletBold = Sniglet({
   subsets: ["latin"],
   weight: "800", // Bold weight
@@ -38,6 +39,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body className={`${snigletBold.className} ${snigletRegular.className}`}>
@@ -47,13 +49,22 @@ export default function RootLayout({ children }) {
         {/* Fixed Back to Homepage Button */}
         <div className="fixedButtonContainer">
           <Link href="/">
-          <Image 
-              src="/homeCatIMG.png"
-              alt="Home"
-              width={70}
-              height={70}
-              className="homepageImage"
-              />
+            <div className="imageWrapper">
+              <Image 
+                  src="/homeCatIMG.png"
+                  alt="Home"
+                  width={70}
+                  height={70}
+                  className="homepageImage"
+                />
+                <Image
+                  src="/homeCatHover.png"
+                  alt="Home"
+                  width={90}
+                  height={90}
+                  className="hoverImage"
+                  />
+            </div>
           </Link>
         </div>
         <main>

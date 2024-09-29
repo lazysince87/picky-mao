@@ -28,13 +28,13 @@ body {
 }
 .fixedButtonContainer {
   position: fixed;
-  top: 20px; /* Adjust as needed */
-  left: 20px; /* Adjust as needed */
-  z-index: 1000; /* Ensure it appears above other content */
+  top: 10px; 
+  left: 20px; 
+  z-index: 1000; 
 }
 
 .homepageButton {
-  background-color: #0070f3; /* Or any color you like */
+  background-color: #0070f3;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -44,6 +44,6 @@ body {
 }
 
 .homepageButton:hover {
-  background-color: #005bb5; /* Darker shade on hover */
+  background-color: #005bb5;
 }
 

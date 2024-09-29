@@ -16,7 +16,7 @@ body {
   width: 100%;
   flex-direction: column;
   align-items: center;
-  background: rgb(224,224,224);
+  background: rgb(255, 221, 221);
   z-index: -2;
 }
 
@@ -38,7 +38,7 @@ body {
 
 .title {
   font-size: 110px;
-  color:rgb(211, 154, 217);
+  color:rgb(255, 108, 108);
   font-weight: 800;
 }
 
@@ -48,7 +48,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: rgb(224,224,224);
+    background-color: rgb(254, 203, 203);
     border-radius: 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -62,15 +62,16 @@ body {
     padding: 10px 20px;
     border: none;
     border-radius: 7px;
-    background-color: #e3b4da; /* Primary button color */
+    background-color: rgb(255, 151, 151); /* Primary button color */
     color: white;
     cursor: pointer;
     font-size: 19px;
-    transition: background-color 0.3s;
+    transition: background-color 0.5s;
 }
 
 .Back:hover {
-    background-color: #d4a8cc; 
+    background-color: rgb(255, 160, 160);
+    outline: 5px solid white;
 }
 
 .Final {
@@ -78,7 +79,7 @@ body {
     padding: 10px 20px;
     border: none;
     border-radius: 7px;
-    background-color: #e3b4da; 
+    background-color: rgb(255, 160, 160); 
     color: white;
     cursor: pointer;
     font-size: 19px;
@@ -86,14 +87,15 @@ body {
 }
 
 .Final:hover {
-    background-color: #d4a8cc; 
+    background-color: rgb(255, 160, 160); 
+    outline: 5px solid white;
 }
 
 .submitBtn {
     display: flex;
     flex: row;
     justify-content: space-between;
-    gap: 20px;
+    gap: 30px;
     font-size: 24px;
 }
 
@@ -103,7 +105,7 @@ body {
     margin-bottom: 20px;
     width: 100%;
     max-width: 400px;
-    gap: 40px;
+    gap: 50px;
 }
 
 .button {
@@ -111,7 +113,7 @@ body {
     padding: 15px 30px;
     border: none;
     border-radius: 9px;
-    background-color: #eea697; 
+    background-color: rgb(255, 108, 108); 
     color: white;
     font-size: 24px;
     cursor: pointer;
@@ -119,7 +121,8 @@ body {
 }
 
 .button:hover {
-    background-color: #de9a8d; 
+    background-color:rgb(255, 115, 115); 
+    outline: 5px solid white;
 }
 
 .button:disabled {
