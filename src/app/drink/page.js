@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import drinkRestaurantDecision from '../backend/dessertFunction';
+import '../modal.css'
 import '../pages.css';
 
 const Filter = () => {
@@ -25,6 +26,7 @@ const Filter = () => {
     const [lastSelections, setLastSelections] = useState({});
     const [result, setResult] = useState(null);
     const [hideLastSet, setHideLastSet] = useState(false); // State for hiding last set
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     useEffect(() => {
         const calculatedResult = drinkRestaurantDecision(lastSelections);
@@ -66,6 +68,7 @@ const Filter = () => {
         const decision = drinkRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision);
+        setIsModalOpen(true)
     };
 
     const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
@@ -124,9 +127,19 @@ const Filter = () => {
 
             {result && (
                 <div className="resultContainer">
-                    <h2>Recommended Restaurant:</h2>
-                    <p>{JSON.stringify(result)}</p>
+                    {/* Modal */}
+            <div className={`modal-overlay${isModalOpen ? '-visible' : ''}`}>
+              <div className={`modal${isModalOpen ? '-visible' : ''}`}>
+              <button className="exitButton" onClick={() => setIsModalOpen(false)}>
+                        ✖     
+                </button>
+                <h2>CAT COOKED!</h2>
+                <h2>Recommended Restaurant:
+                <p>{JSON.stringify(result)}</p>
+                </h2>
                 </div>
+                </div>
+            </div>
             )}
         </div>
     );

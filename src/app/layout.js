@@ -1,9 +1,14 @@
 import { Sniglet } from "next/font/google";
 import "./globals.css";
 
-const sniglet = Sniglet({
+const snigletBold = Sniglet({
   subsets: ["latin"],
-  weight: "800"
+  weight: "800", // Bold weight
+});
+
+const snigletRegular = Sniglet({
+  subsets: ["latin"],
+  weight: "400", // Regular weight
 });
 
 export const metadata = {
@@ -33,7 +38,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={sniglet.className}>
+      <body className={`${snigletBold.className} ${snigletRegular.className}`}>
           <main>
               {children}
           </main>
