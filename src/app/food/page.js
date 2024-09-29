@@ -6,6 +6,7 @@ import '../pages.css'
 import foodRestaurantDecision from '../backend/foodFunction.js';
 
 
+
 const Filter = () => {
     const [buttonPairs, setButtonPairs] = useState([
         [
@@ -35,6 +36,7 @@ const Filter = () => {
     const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
     const [lastSelections, setLastSelections] = useState({});
     const [result, setResult] = useState(null); // State to store the result
+    const [catImage, setCatImage] = useState('/capochills.gif');
 
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
@@ -52,6 +54,7 @@ const Filter = () => {
             ...prevSelections,
             [currentPairIndex]: id,
         }));
+        setCatImage('/capoates.gif');
     };
 
     const backOptions = () => {
