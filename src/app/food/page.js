@@ -41,6 +41,7 @@ const Filter = () => {
     const [catImage, setCatImage] = useState('/capochills.gif');
     const [isModalOpen, setIsModalOpen] = useState(false)
 
+
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
         updatedPairs[currentPairIndex] = newButtons; // Update the current pair with new buttons
