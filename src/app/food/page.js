@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import ButtonPair from '../ButtonPair'; 
 import '../pages.css'
-import foodRestaurantDecision from '../backend/foodFunction';
+import foodRestaurantDecision from '../backend/foodFunction.js';
 
 
 const Filter = () => {
@@ -61,7 +61,7 @@ const Filter = () => {
 
     const handleSubmit = ()=> {
         // const decision = foodRestaurantDecision(lastSelections);
-        const decision = {name: "hi", distance: 3.2, openTime: 10.0, closeTime: 19.0, cuisine: "asian"};
+        const decision = foodRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision); // Store the result
     };
