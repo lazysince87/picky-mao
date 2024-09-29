@@ -1,7 +1,6 @@
 'use client'
 import React, { useState,useEffect } from 'react';
-import './button.css';
-import ButtonPair from './ButtonPair';
+import ButtonPair from '../food/ButtonPair';
 
 
 const Filter = () => {
