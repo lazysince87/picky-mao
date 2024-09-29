@@ -20,17 +20,26 @@ body {
   z-index: -2;
 }
 
+.buttonBox {
+    width: 100%;
+    position: relative;
+    z-index: 1;  
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+
+.catimg {
+    width: 400px;
+    height: 400px;
+}
+
 .title {
   font-size: 110px;
   color:rgb(211, 154, 217);
   font-weight: 800;
-}
-
-.CatCooks {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .buttonContainer {
@@ -40,7 +49,7 @@ body {
     align-items: center;
     padding: 20px;
     background-color: rgb(224,224,224);
-    border-radius: 10px;
+    border-radius: 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -60,10 +69,35 @@ body {
     background-color: #d4a8cc; 
 }
 
+.Final {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e3b4da; 
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.Final:hover {
+    background-color: #d4a8cc; 
+}
+
+.submitBtn {
+    display: flex;
+    flex: row;
+    justify-content: space-between;
+}
+
 .buttonPair {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+    gap: 40px;
 }
 
 .button {

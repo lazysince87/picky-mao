@@ -26,14 +26,14 @@ export default function Home() {
 
   return (
     <div className='home'>
-      <h1 className='title'>PICKY MAO</h1>
+      <h1 className='title' suppressHydrationWarning>PICKY MAO !</h1>
       <Image
         className='logo'
         src='/capologo.gif'
         alt='Picky Mao Logo'
-        width={140}
-        height={100}
-        style={{ objectFit: 'contain', width: 'auto' }}
+        width={300}
+        height={250}
+        style={{ height:'auto', width: 'auto' }}
       />
       <div className='imagesContainer'>
         {images.map((image, index) => {

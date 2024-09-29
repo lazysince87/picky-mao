@@ -78,6 +78,7 @@ const Filter = () => {
             <div>
                 {initialButtons.map(button => (
                     <button
+                        className='button'
                         key={button.id}
                         onClick={() => {
                             onButtonClick(button.id); // Call the handler with button ID
@@ -96,10 +97,11 @@ const Filter = () => {
     };
     return (
         <div className='body'>
-            <div className='CatCooks'>
+            <div className='buttonBox'>
                 <Image
-                src='/capoeats.gif'
-                alt='Picky Mao Eats'
+                className='catimg'
+                src='/capochills.gif'
+                alt='Picky Mao Cooks'
                 width={400}
                 height={400}
                 style={{ objectFit: 'contain', width: 'auto' }}
@@ -110,26 +112,25 @@ const Filter = () => {
                                 initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
                                 onNext={handleNextButtons} // Pass the handler for new buttons
                                 onButtonClick={handleButtonClick} // Pass button click handler
-                            /><div className='buttonContainer'>
+                            /><div>
                                     {buttonPairs.length > 0 && (
                                         <ButtonPair
                                             initialButtons={buttonPairs[currentPairIndex]} // Only show current pair
                                             onNext={handleNextButtons} // Pass the handler for new buttons
                                         />
                                     )}
+                                    <div className ='submitBtn'>
                                     <button className="Back" onClick={backOptions}>
                                         Back
                                     </button>
+                                    <button className="Final" onClick={handleSubmit}>
+                                    Submit
+                                </button>
+                                </div>
                                 </div></>
             )}
             </div>
         </div>
-            <button className="Back" onClick={backOptions}>
-                Back
-            </button>
-            <button className="Final" onClick={handleSubmit}>
-                Submit
-            </button>
             {result && (
                 <div className="resultContainer">
                     <h2>Recommended Restaurant:</h2>
