@@ -39,6 +39,7 @@ const Filter = () => {
     const [hideLastSet, setHideLastSet] = useState(false); //Hiding last options
     const [catImage, setCatImage] = useState('/capochills.gif');
 
+
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
         updatedPairs[currentPairIndex] = newButtons; // Update the current pair with new buttons
