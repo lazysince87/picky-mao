@@ -22,6 +22,12 @@ const Filter = () => {
             { id: 'european', label: 'European', opacity: 1},
             { id: 'Any', label: 'Any', opacity: 1},
         ],
+        [
+          { id: 1, label: 'Within 1 mile', opacity: 1},
+          { id: 2, label: 'Within 2 miles', opacity: 1},
+          { id: 3, label: 'Within 3+ miles', opacity: 1},
+
+        ],
     ]);
 
     const [currentPairIndex, setCurrentPairIndex] = useState(0); // Track current button pair
@@ -49,32 +55,14 @@ const Filter = () => {
 
     const backOptions = () => {
         setCurrentPairIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Reset to the first pair
-        setButtonPairs([
-            [
-                { id: 'Now', label: 'Now', opacity: 1 },
-                { id: 'Later', label: 'Later', opacity: 1 },
-            ],
-            [
-                { id: 'gourmet', label: 'Gourmet', opacity: 1 },
-                { id: 'fast food', label: 'Fast Food', opacity: 1 },
-                { id: 'buffet', label: 'Buffet', opacity: 1 },
-            ],
-            [
-                { id: 'asian', label: 'Asian', opacity: 1},
-                { id: 'hispanic', label: 'Hispanic', opacity: 1},
-                { id: 'american', label: 'American', opacity: 1},
-                { id: 'european', label: 'European', opacity: 1},
-                { id: 'Any', label: 'Any', opacity: 1},
-            ],
-        ]);
+
     };
 
     const handleClick = (id) => {
         onButtonClick(id); // Call the parent click handler
         const updatedButtons = initialButtons.map(button => {
-            //return button.id === id ? { ...button, opacity: 0.5 } : button; // Change opacity on click
         });
-        onNext(updatedButtons); // Call the function to pass updated buttons back to Filter
+        onNext(updatedButtons); // Update
     };
     
     const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
@@ -84,7 +72,7 @@ const Filter = () => {
                     <button
                         key={button.id}
                         onClick={() => {
-                            onButtonClick(button.id); // Call the handler with the button ID
+                            onButtonClick(button.id); // Call the handler with button ID
                             const updatedButtons = initialButtons.map(b => {
                                 return b.id === button.id ? { ...b, opacity: 1 } : b;
                             });

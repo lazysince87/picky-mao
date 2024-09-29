@@ -8,9 +8,9 @@ import './styles.css'
 
 
 const images = [
-  { src: '/foodpic.png', alt: 'Food Choice', width: 250, height: 250, link: '/food' },
+  { src: '/foodpic.png', alt: 'Food Choice', width: 290, height: 290, link: '/food' },
   { src: '/boba.gif', alt: 'Drink Choice', width: 400, height: 300, link: '/drink' },
-  { src: '/dessert1.png', alt: 'Dessert Choice', width: 320, height: 300, link: '/dessert' },
+  { src: '/dessert1.png', alt: 'Dessert Choice', width: 330, height: 330, link: '/dessert' },
 ];
 
 export default function Home() {
@@ -31,8 +31,8 @@ export default function Home() {
         className='logo'
         src='/capologo.gif'
         alt='Picky Mao Logo'
-        width={100}
-        height={60}
+        width={140}
+        height={100}
         style={{ objectFit: 'contain', width: 'auto' }}
       />
       <div className='imagesContainer'>
