@@ -27,7 +27,8 @@ body {
   width: 100%;
   flex-direction: column;
   align-items: center;
-  background: rgb(224,224,224);
+  background: rgb(255, 221, 221);
+  ;
   z-index: -2;
 }
 
@@ -39,9 +40,18 @@ body {
 
 .title {
   font-size: 100px;
-  color:rgb(211, 154, 217);
+  color:rgb(255, 151, 151);
   font-weight: 800;
   margin-bottom: 100px;
+  text-shadow: 
+    -4px -4px 0 white,  
+     4px -4px 0 white,
+    -4px  4px 0 white,
+     4px  4px 0 white,
+     -4px  0 0 white,
+      4px  0 0 white,
+      0 -4px 0 white,
+      0  4px 0 white; 
 }
 
 .imagesContainer {
@@ -82,15 +92,17 @@ body {
   margin: 0 10px; /* Space between buttons */
   border: none; 
   border-radius: 10px; 
-  background-color: rgb(223, 164, 229); 
+  background-color: rgb(255, 151, 151); 
   color: white; 
   font-size: 24px;
   cursor: pointer; 
-  transition: background-color 0.3s ease, transform 0.3s ease; 
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  outline: 4px solid white;
+  box-shadow: 10px 15px 5px rgba(34, 33, 33, 0.2);
 }
 
 .slideButton:hover {
-  background-color:rgb(211, 154, 217);  
+  background-color:rgb(254, 203, 203);  
   transform: scale(1.05); 
 }
 
@@ -101,3 +113,28 @@ body {
   width: 100%;
 }
 
+.imageWrapper {
+  position: relative; /* Make the wrapper a positioning context */
+  width: 70px;
+  height: 70px;
+}
+
+.homepageImage {
+  display: block; /* Ensures the images are block elements */
+}
+
+.hoverImage {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.imageWrapper:hover .hoverImage {
+  opacity: 1; /* Show the hover image on hover */
+}
+
+.imageWrapper:hover .homepageImage {
+  opacity: 0; /* Hide the default image on hover */
+}
