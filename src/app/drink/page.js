@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import drinkRestaurantDecision from '../backend/dessertFunction';
+import drinkRestaurantDecision from '../backend/drinkFunction';
 import App from '../api/App'
 import '../modal.css'
 import '../pages.css';
@@ -65,7 +65,6 @@ const Filter = () => {
         }
     };
 
-    let hi = ''
 
     const handleSubmit = () => {
         const decision = drinkRestaurantDecision(lastSelections);
@@ -73,9 +72,7 @@ const Filter = () => {
         setResult(decision);
         setIsModalOpen(true)
 
-        hi = decision.name
     };
-    const initialQuery = hi
 
     const ButtonPair = ({ initialButtons, onNext, onButtonClick }) => {
         return (
@@ -125,7 +122,7 @@ const Filter = () => {
                             Back
                         </button>
                         <button className="Final" onClick={handleSubmit}>
-                            Submit
+                            Cat Cooks!
                         </button>
                     </div>
                 </div>
@@ -139,12 +136,15 @@ const Filter = () => {
               <button className="exitButton" onClick={() => setIsModalOpen(false)}>
                         ✖     
                 </button>
-                <App initialQuery={initialQuery} 
+                <App initialQuery={result.name} 
                 className='api'></App>
-                <h2>CAT COOKED!</h2>
-                <h2>Recommended Restaurant:
-                <p>{JSON.stringify(result)}</p>
+                <div className='strings'>
+                    <h2>CAT COOKED!</h2>
+                    <h2>Recommended Restaurant:
+                    <p>Restaurant&apos;s Name: {result.name}</p> 
+                    <p>Distance: {result.distance}</p>
                 </h2>
+                </div>
                 </div>
                 </div>
             </div>

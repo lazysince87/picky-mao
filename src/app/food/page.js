@@ -70,17 +70,13 @@ const Filter = () => {
         }
     };
 
-    let hi = ''
 
     const handleSubmit = () => {
         const decision = foodRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision); // Store the result
         setIsModalOpen(true)
-
-         hi = decision.name;
     };
-    const initialQuery = hi
     
     const ButtonPairComponent = ({ initialButtons, onNext, onButtonClick }) => {
         return (
@@ -129,7 +125,7 @@ const Filter = () => {
                                 Back
                             </button>
                             <button className="Final" onClick={handleSubmit}>
-                            Submit
+                            Cat Cooks!
                         </button>
                     </div>
                 </div>
@@ -143,13 +139,18 @@ const Filter = () => {
                 <button className="exitButton" onClick={() => setIsModalOpen(false)}>
                         ✖     
                 </button>
+                
                 <App
-                initialQuery={initialQuery} 
+                initialQuery={result.name} 
                 className='api'></App>
+    
+                <div className='strings'>
                 <h2>CAT COOKED!</h2>
                 <h2>Recommended Restaurant:
-                <p>{JSON.stringify(result)}</p>
+                <p>Restaurant&apos;s Name: {result.name}</p> 
+                <p>Distance: {result.distance}</p>
                 </h2>
+                </div>
               </div>
             </div>
                 </div>
@@ -157,5 +158,6 @@ const Filter = () => {
         </div>
     );
 };
+
 
 export default Filter;

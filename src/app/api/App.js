@@ -59,6 +59,7 @@ function App({ initialQuery }) {
   }
 
   const fetchPlaces = () => {
+    setInputString(initialQuery)
     if (isLoaded && map) {
       const request = {
         query: `${inputString} gainesville florida`,
@@ -73,12 +74,18 @@ function App({ initialQuery }) {
             lat: location.geometry.location.lat(),
             lng: location.geometry.location.lng()
           };
+
+          console.log({initialQuery});
           
           setDirections(null);
 
           // Update points to include the new location
-          setPoints([points[0], {lat: 29.628342687746983, lng: -82.38500657517038}]);
-          console.log(newPoint)
+          // setPoints([points[0], newPoint]);
+          setPoints(prevPoints => [
+            { ...prevPoints[0] },
+            newPoint // use the new location
+          ]);
+
         } else {
           console.error("Places service status:", status);
         }
