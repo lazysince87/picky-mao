@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import dessertRestaurantDecision from '../backend/dessertFunction';
+import App from '../api/App'
 import '../modal.css'
 import '../pages.css';
 
@@ -83,14 +84,18 @@ const Filter = () => {
         setHideLastSet(false);
         }
     };
+    let hi = ''
 
     const handleSubmit = () => {
         const decision = dessertRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision); // Store the result
         setIsModalOpen(true)
+        hi = decision.name
     };
+    const initialQuery = hi
     
+
     const ButtonPairComponent = ({ initialButtons, onNext, onButtonClick }) => {
     return (
         <div>
@@ -153,6 +158,8 @@ const Filter = () => {
               <button className="exitButton" onClick={() => setIsModalOpen(false)}>
                         ✖     
                 </button>
+                <App initialQuery={initialQuery} 
+                className='api'></App>
                 <h2>CAT COOKED!</h2>
                 <h2>Recommended Restaurant:
                 <p>{JSON.stringify(result)}</p>

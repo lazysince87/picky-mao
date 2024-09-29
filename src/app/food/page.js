@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import ButtonPair from '../ButtonPair'; 
 import foodRestaurantDecision from '../backend/foodFunction.js';
+import App from '../api/App'
 import '../modal.css'
 import '../pages.css'
 
@@ -41,7 +42,6 @@ const Filter = () => {
     const [catImage, setCatImage] = useState('/capochills.gif');
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-
     const handleNextButtons = (newButtons) => {
         const updatedPairs = [...buttonPairs];
         updatedPairs[currentPairIndex] = newButtons; // Update the current pair with new buttons
@@ -70,12 +70,17 @@ const Filter = () => {
         }
     };
 
+    let hi = ''
+
     const handleSubmit = () => {
         const decision = foodRestaurantDecision(lastSelections);
         console.log("Decision:", decision);
         setResult(decision); // Store the result
         setIsModalOpen(true)
+
+         hi = decision.name;
     };
+    const initialQuery = hi
     
     const ButtonPairComponent = ({ initialButtons, onNext, onButtonClick }) => {
         return (
@@ -138,6 +143,9 @@ const Filter = () => {
                 <button className="exitButton" onClick={() => setIsModalOpen(false)}>
                         ✖     
                 </button>
+                <App
+                initialQuery={initialQuery} 
+                className='api'></App>
                 <h2>CAT COOKED!</h2>
                 <h2>Recommended Restaurant:
                 <p>{JSON.stringify(result)}</p>

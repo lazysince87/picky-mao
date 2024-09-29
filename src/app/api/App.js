@@ -15,12 +15,14 @@ function App({ initialQuery }) {
     lng: -82.34370328886838
     },
     {
+      lat: 0,
+      lng: 0
     }, ]);
   const [inputString, setInputString] = useState(initialQuery);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyAI1aGvbPiIxDXZzzNaTEpb_3m0LXKljmw",
     libraries: ['places']
   })
 
@@ -59,7 +61,7 @@ function App({ initialQuery }) {
   const fetchPlaces = () => {
     if (isLoaded && map) {
       const request = {
-        query: `${inputString} university of florida`,
+        query: `${inputString} gainesville florida`,
         fields: ['geometry', 'name']
       };
 
@@ -75,7 +77,8 @@ function App({ initialQuery }) {
           setDirections(null);
 
           // Update points to include the new location
-          setPoints([points[0], newPoint]);
+          setPoints([points[0], {lat: 29.628342687746983, lng: -82.38500657517038}]);
+          console.log(newPoint)
         } else {
           console.error("Places service status:", status);
         }
