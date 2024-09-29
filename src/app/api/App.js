@@ -6,19 +6,7 @@ const containerStyle = {
   height: '550px'
 };
 
-// const points = [
-//   {
-//   lat: 29.646721735263835, 
-//   lng: -82.34800087537447
-//   },
-//   {
-//   lat: 29.6361750337593,
-//   lng: -82.36972897352743
-// }, 
-// ];
-
-
-function App() {
+function App({ initialQuery }) {
   const [map, setMap] = React.useState(null)
   const [directions, setDirections] = useState(null)
   const [points, setPoints] = useState([  {
@@ -28,10 +16,11 @@ function App() {
     },
     {
     }, ]);
+  const [inputString, setInputString] = useState(initialQuery);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyAI1aGvbPiIxDXZzzNaTEpb_3m0LXKljmw",
+    googleMapsApiKey: "",
     libraries: ['places']
   })
 
@@ -70,7 +59,7 @@ function App() {
   const fetchPlaces = () => {
     if (isLoaded && map) {
       const request = {
-        query: "raising canes university of florida",
+        query: `${inputString} university of florida`,
         fields: ['geometry', 'name']
       };
 
@@ -87,10 +76,6 @@ function App() {
 
           // Update points to include the new location
           setPoints([points[0], newPoint]);
-          
-          // points[1] = newPoint;
-
-          console.log(newPoint);
         } else {
           console.error("Places service status:", status);
         }
@@ -101,7 +86,7 @@ function App() {
 
   useEffect(() => {
     fetchPlaces();
-  }, [isLoaded, map]);
+  }, [isLoaded, map, inputString]);
 
   useEffect(()=>{
     calculateDirections()
