@@ -6,19 +6,7 @@ const containerStyle = {
   height: '550px'
 };
 
-// const points = [
-//   {
-//   lat: 29.646721735263835, 
-//   lng: -82.34800087537447
-//   },
-//   {
-//   lat: 29.6361750337593,
-//   lng: -82.36972897352743
-// }, 
-// ];
-
-
-function App() {
+function App({ initialQuery }) {
   const [map, setMap] = React.useState(null)
   const [directions, setDirections] = useState(null)
   const [points, setPoints] = useState([  {
@@ -27,12 +15,14 @@ function App() {
     lng: -82.34370328886838
     },
     {
+      lat: 0,
+      lng: 0
     }, ]);
   const [inputString, setInputString] = useState(initialQuery);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyAI1aGvbPiIxDXZzzNaTEpb_3m0LXKljmw",
     libraries: ['places']
   })
 
@@ -57,7 +47,7 @@ function App() {
         origin: waypoints[0],
         destination: waypoints[1],
         waypoints: waypoints.slice(2),
-        travelMode: window.google.maps.TravelMode.WALKING
+        travelMode: window.google.maps.TravelMode.DRIVING
       }
 
       const res = await directionsService.route(request)
@@ -71,7 +61,7 @@ function App() {
   const fetchPlaces = () => {
     if (isLoaded && map) {
       const request = {
-        query: "raising canes university of florida",
+        query: `${inputString} gainesville florida`,
         fields: ['geometry', 'name']
       };
 
@@ -87,7 +77,8 @@ function App() {
           setDirections(null);
 
           // Update points to include the new location
-          setPoints([points[0], newPoint]);
+          setPoints([points[0], {lat: 29.628342687746983, lng: -82.38500657517038}]);
+          console.log(newPoint)
         } else {
           console.error("Places service status:", status);
         }
